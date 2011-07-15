@@ -1,0 +1,35 @@
+
+#load coreutils
+. /usr/local/Cellar/coreutils/8.12/aliases
+# common functions
+. $HOME/.bash/functions.sh
+# global directory stack
+. $HOME/.bash/dirstack.sh
+
+#common stuff
+alias g="mvim"
+alias cd..='cd ..'
+
+#alias to reload aliases... meta...
+alias reload='source ~/.bash/aliases; source ~/.bash/ps1_setter.sh'
+alias reload-ps1='source ~/.bash/ps1_setter.sh'
+alias reload-aliases='source ~/.bash/aliases'
+
+#save me a character, please.
+alias vi=vim
+
+alias ls="gls --color=auto"
+
+alias edit-aliases="mvim $HOME/.bash/aliases"
+
+alias bundle-all="for i in \`ls $PWD\`; do cd \"$i\"; echo \"exec bundle in: $i\"; bundle install; cd ..; done;"
+
+
+alias push="dirstack push"
+alias pop="dirstack pop"
+alias ds="dirstack"
+
+
+
+alias sl=ls
+
