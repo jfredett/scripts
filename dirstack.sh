@@ -104,6 +104,11 @@ function dirstack() {
     dirstack force "$next"
   }
 
+  function dup() {
+    local top=$(dirstack peek)
+    dirstack force "$top"
+  }
+
   function clear_stack() {
     rm $DIRSTACK_DEFAULT_STACK
     touch $DIRSTACK_DEFAULT_STACK
@@ -126,6 +131,7 @@ usage: dirstack <command> [options]
 the commands are:
   push [PATH] | push a directory onto the stack, if PATH is not provided, then the CWD is pushed
   pop         | pop a directory off the stack (if the stack is non-empty), cd to that directory
+  dup         | duplicates the top element of the stack
   peek        | view the top directory on the stack
   show        | view the whole stack
   swap        | swap the top two elements on the stack
@@ -142,6 +148,7 @@ HELP
      #public
      push)      push_ds $2              ;;
      pop)       pop_ds                  ;;
+     dup)       dup                     ;;
      peek)      peek                    ;;
      show)      show                    ;;
      swap)      swap                    ;;
