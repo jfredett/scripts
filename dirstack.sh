@@ -106,6 +106,7 @@ function dirstack() {
 
   function clear_stack() {
     rm $DIRSTACK_DEFAULT_STACK
+    touch $DIRSTACK_DEFAULT_STACK
   }
 
   function reload_dirstack() {

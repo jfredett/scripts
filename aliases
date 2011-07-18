@@ -33,3 +33,5 @@ alias ds="dirstack"
 
 alias sl=ls
 
+alias clobber="rake db:drop:all db:create:all db:migrate db:test:prepare"
+alias hammer="clobber"

@@ -5,23 +5,6 @@
 # rvm contrib
 #
 
-function set_color() {
-  color=$1; val=$2;
-  shift; shift;
-
-  case $color in
-    "RED")     printf "%s" "\[\033[0;31m\]$val\[\033[0m\]" ;;
-    "YELLOW")  printf "%s" "\[\033[0;33m\]$val\[\033[0m\]" ;;
-    "GREEN")   printf "%s" "\[\033[0;32m\]$val\[\033[0m\]" ;;
-    "LGTGRN")  printf "%s" "\[\033[1;32m\]$val\[\033[0m\]" ;;
-    "BLUE")    printf "%s" "\[\033[0;36m\]$val\[\033[0m\]" ;;
-    "BROWN")   printf "%s" "\[\033[0;33m\]$val\[\033[0m\]" ;;
-    "PURPLE")  printf "%s" "\[\033[0;35m\]$val\[\033[0m\]" ;;
-    *)         printf "%s" "$val" ;;
-  esac
-
-}
-
 ## tears some info from rvminfo
 function current_ruby() {
   [[ -z $rvm_ruby_string ]] && rvm_ruby_string="system"
@@ -106,7 +89,7 @@ function ps1() {
   [ $ruby_val = " " ] && ruby_val=""
   [ $stack_val ] && stack_val="($stack_val)"
 
-  export PS1=$(printf "(%s) %s%s\n∫∫∫ " "$(current_dir)" "$ruby_val$git_val" "$stack_val")
+  export PS1=$(printf "(%s) %s %s\n∫∫∫ " "$(current_dir)" "$ruby_val$git_val" "$stack_val")
 }
 
 PROMPT_COMMAND="ps1"
