@@ -9,7 +9,7 @@ function gitspy() {
   function current_commit() {
      local val="$(git rev-parse --short --quite HEAD 2> /dev/null)"
      [ -z "$val" ] && return
-     set_color "PURPLE"
+     set_color "PURPLE" "$val"
   }
 
   function last_committer() {
@@ -41,13 +41,29 @@ function gitspy() {
   function git_status() {
     local val=$(git status 2>/dev/null)
 
-    [ -z $val ] && return
+    [ -z "$val" ] && return
 
     [[ "${val}" = *Untracked* ]] && printf "%s" $(set_color "YELLOW" "U")
     [[ "${val}" = *modified*  ]] && printf "%s" $(set_color "GREEN" "M")
     [[ "${val}" = *deleted*   ]] && printf "%s" $(set_color "RED" "D")
 
   }
+
+  function gen_ps1() {
+    local curr_branch="$(gitspy current branch)"
+    local curr_commit="$(gitspy current commit)"
+    local curr_committer="$(gitspy current committer)"
+    local curr_status="$(gitspy status)"
+
+    [ -z "$curr_branch" ]    && curr_branch=$(set_color "RED" "none")
+    [ -z "$curr_commit" ]    && curr_commit=$(set_color "RED" "headless")
+    [ -z "$curr_committer" ] && curr_committer=$(set_color "RED" "unknown")
+
+    echo -n "($curr_branch:$curr_commit:$curr_committer) $curr_status"
+
+
+  }
+
 
 ####################################################
 
@@ -70,6 +86,7 @@ the commands are:
                           WIP, GREEN for a feature branch (anything starting w/ a ticket number), and
                           YELLOW for everything else.
   current branch count  | returns the number of branches local to the repo.
+  ps1                   | generates a suitable string for a PS1 prompt-string
 Help
     }
 
@@ -90,6 +107,7 @@ Help
                 --help|*) show_help current
              esac                                            ;;
     reload) source ~/.bash/gitspy.sh                         ;;
+    ps1) gen_ps1                                             ;;
     help|*) show_help                                        ;;
   esac
 
