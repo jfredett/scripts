@@ -6,6 +6,7 @@
 #
 function ps1_setter() {
   source ~/.bash/gitspy.sh
+  source ~/.bash/rvmspy.sh
 
   function current_dir() {
     echo -n "${PWD#$(echo $PWD | xargs dirname | xargs dirname)/}"
@@ -28,15 +29,15 @@ function ps1_setter() {
     fi
   }
 
-
   function ps1() {
-    local git_val=$(gitspy ps1)
-    local stack_val="$(top_of_stack)$(stack_size)"
+    local git=$(gitspy ps1)
+    local ruby=$(rvmspy ps1)
+    local stack="$(top_of_stack)$(stack_size)"
 
-    [ $stack_val ] && stack_val="($stack_val)"
+    [ $stack ] && stack="($stack)"
 
-  #  export PS1=$(printf "(%s) %s %s\n∫∫∫ " "$(current_dir)" "$ruby_val$git_val" "$stack_val")
-    export PS1="($(current_dir)) $git_val \n∫∫∫ "
+  #  export PS1=$(printf "(%s) %s %s\n∫∫∫ " "$(current_dir)" "$ruby$git" "$stack")
+    export PS1="($(current_dir)) $ruby $git $stack \n∫∫∫ "
   }
 
   ps1

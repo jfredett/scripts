@@ -19,6 +19,12 @@ function rvmspy() {
     fi
   }
 
+  function gen_ps1() {
+    local val=$(current_ruby)
+    [ -z "$val" ] && echo -n "($(set_color "RED" "system"))" && return
+    echo -n "($(set_color "YELLOW" "$val"))"
+  }
+
   function show_help() {
   cat << HELP
 rvmspy - a clever way to get at rvm info
@@ -31,6 +37,7 @@ append --help at the end of any string of commands for help
 the commands are:
   current gemset    | returns the name of the current gemset in use
   current ruby      | returns the name of the ruby in use
+  ps1               | generates a string suitable for use in a PS1 command prompt string
 HELP
   }
 
@@ -42,6 +49,7 @@ HELP
               gemset) current_gemset  ;;
              esac                     ;;
     reload) source ~/.bash/rvmspy.sh  ;;
+    ps1) gen_ps1                      ;;
     *) show_help                      ;;
   esac
 }
