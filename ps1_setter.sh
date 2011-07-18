@@ -22,38 +22,6 @@ function current_gemset() {
   fi
 }
 
-function current_commit() {
-  echo $(set_color "PURPLE" "$(git rev-parse --short --quite HEAD 2> /dev/null)")
-}
-
-function last_committer() {
-  local val=$(git log -n1 2> /dev/null | head -n2 | tail -n1 | cut -c 9-)
-  val=${val%% *}
-  [[ -z $val ]] && return
-  [ $val = "Joe" ] && val=$(set_color "GREEN" $val)
-  echo -n $val
-}
-
-function current_branch() {
-  local val=$(git symbolic-ref -q HEAD 2>/dev/null)
-  val=${val##*/}
-  [ -z $val ] && return
-  case $val in
-    master)         echo $(set_color "RED" $val) ;;
-    WIP*)           echo $(set_color "BLUE" $val) ;;
-    *[:digit:]* )   echo $(set_color "GREEN" $val) ;;
-    *)              echo $(set_color "YELLOW" $val) ;;
-  esac
-}
-
-function git_status() {
-  local val=$(git status 2>/dev/null)
-
-  [[ "${val}" = *Untracked* ]] && printf "%s" $(set_color "YELLOW" "U")
-  [[ "${val}" = *modified*  ]] && printf "%s" $(set_color "GREEN" "M")
-  [[ "${val}" = *deleted*   ]] && printf "%s" $(set_color "RED" "D")
-
-}
 
 function current_dir() {
   echo -n "${PWD#$(echo $PWD | xargs dirname | xargs dirname)/}"
@@ -89,7 +57,7 @@ function ps1() {
   [ $ruby_val = " " ] && ruby_val=""
   [ $stack_val ] && stack_val="($stack_val)"
 
-  export PS1=$(printf "(%s) %s %s\n∫∫∫ " "$(current_dir)" "$ruby_val$git_val" "$stack_val")
+#  export PS1=$(printf "(%s) %s %s\n∫∫∫ " "$(current_dir)" "$ruby_val$git_val" "$stack_val")
 }
 
 PROMPT_COMMAND="ps1"
