@@ -50,6 +50,9 @@ function gitspy() {
   }
 
   function gen_ps1() {
+    gitspy absent? && return
+
+
     local curr_branch="$(gitspy current branch)"
     local curr_commit="$(gitspy current commit)"
     local curr_committer="$(gitspy current committer)"
@@ -60,10 +63,16 @@ function gitspy() {
     [ -z "$curr_committer" ] && curr_committer=$(set_color "RED" "unknown")
 
     echo -n "($curr_branch:$curr_commit:$curr_committer) $curr_status"
-
-
   }
 
+  function is_git_dir() {
+    git status &> /dev/null
+    return "$?"
+  }
+
+  function not_git_dir() {
+    gitspy present? && return 1; return 0
+  }
 
 ####################################################
 
@@ -87,6 +96,8 @@ the commands are:
                           YELLOW for everything else.
   current branch count  | returns the number of branches local to the repo.
   ps1                   | generates a suitable string for a PS1 prompt-string
+  present?              | returns 128 if the current directory is not a git directory, 0 if it is.
+  absent?               | returns 1 if the current directory is a git directory, 0 otherwise.
 Help
     }
 
@@ -106,6 +117,8 @@ Help
                         esac                                 ;;
                 --help|*) show_help current
              esac                                            ;;
+    present?) is_git_dir                                     ;;
+    absent?) not_git_dir                                     ;;
     reload) source ~/.bash/gitspy.sh                         ;;
     ps1) gen_ps1                                             ;;
     help|*) show_help                                        ;;
