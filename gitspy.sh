@@ -61,8 +61,9 @@ function gitspy() {
     [ -z "$curr_branch" ]    && curr_branch=$(set_color "RED" "none")
     [ -z "$curr_commit" ]    && curr_commit=$(set_color "RED" "headless")
     [ -z "$curr_committer" ] && curr_committer=$(set_color "RED" "unknown")
+    [ -n "$curr_status" ]    && curr_status=" $curr_status"
 
-    echo -n "($curr_branch:$curr_commit:$curr_committer) $curr_status"
+    echo -n "($curr_branch:$curr_commit:$curr_committer)$curr_status"
   }
 
   function is_git_dir() {
