@@ -5,24 +5,20 @@ function rvmspy() {
   ## tears some info from rvminfo
   function current_ruby() {
     [ -z "$rvm_ruby_string" ] && rvm_ruby_string="system"
-    echo $(set_color "YELLOW" $rvm_ruby_string)
+    echo -n $rvm_ruby_string
   }
 
   function current_gemset() {
-    local val=$(cat .rvmrc 2> /dev/null)
-    val=${val#*@}
-    val=${val%% *}
-    if [ "$val" = "export" ] ; then
-      echo -n ""
-    else
-      echo -n $(set_color "BLUE" "|$val")
-    fi
+    echo -n "${GEM_HOME#*@}"
   }
 
   function gen_ps1() {
     local val=$(current_ruby)
-    [ -z "$val" ] && echo -n "($(set_color "RED" "system"))" && return
-    echo -n "($(set_color "YELLOW" "$val"))"
+    if [ "$val" = "system" ] ; then
+      echo -n "($(set_color "RED" "system"))"
+    else
+      echo -n "($(set_color "YELLOW" "$val"))"
+    fi
   }
 
   function show_help() {
