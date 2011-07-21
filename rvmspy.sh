@@ -4,8 +4,7 @@ function rvmspy() {
 
   ## tears some info from rvminfo
   function current_ruby() {
-    [ -z "$rvm_ruby_string" ] && rvm_ruby_string="system"
-    echo -n $rvm_ruby_string
+    echo -n ${rvm_ruby_string:-system}
   }
 
   function current_gemset() {
@@ -13,12 +12,9 @@ function rvmspy() {
   }
 
   function gen_ps1() {
-    local val=$(current_ruby)
-    if [ "$val" = "system" ] ; then
-      echo -n "($(set_color "RED" "system"))"
-    else
-      echo -n "($(set_color "YELLOW" "$val"))"
-    fi
+    local val=$(current_ruby) ; local color="YELLOW"
+    [ "$val" = "system" ] && color="RED"
+    echo -n "($(set_color "$color" "$val"))"
   }
 
   function show_help() {
