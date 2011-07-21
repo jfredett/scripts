@@ -50,24 +50,21 @@ function gitspy() {
   }
 
   function gen_ps1() {
+    function set_default() {
+      echo -n "${1:-$(set_color "RED" "$2")}"
+    }
     if gitspy present? ; then
-      local curr_branch="$(gitspy current branch)"
-      local curr_commit="$(gitspy current commit)"
-      local curr_committer="$(gitspy current committer)"
-      local curr_status="$(gitspy status)"
-
-      [ -z "$curr_branch" ]    && curr_branch=$(set_color "RED" "none")
-      [ -z "$curr_commit" ]    && curr_commit=$(set_color "RED" "headless")
-      [ -z "$curr_committer" ] && curr_committer=$(set_color "RED" "unknown")
-      [ "$curr_status" ]       && curr_status=" $curr_status"
+      local curr_branch=$(set_default "$(gitspy current branch)" "none")
+      local curr_commit=$(set_default "$(gitspy current commit)" "headless")
+      local curr_committer=$(set_default "$(gitspy current committer)" "unknown")
+      local curr_status="$(gitspy status)" ; [ "$curr_status" ] && curr_status=" $curr_status"
 
       echo -n "($curr_branch:$curr_commit:$curr_committer)$curr_status"
     fi
   }
 
   function is_git_dir() {
-    git status &> /dev/null
-    return "$?"
+    git status &> /dev/null ; return "$?"
   }
 
   function not_git_dir() {
