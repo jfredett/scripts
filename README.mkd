@@ -253,6 +253,73 @@ For a particularly odd usage, imagine a single machine is running a tmux to whic
 many developers in a team attach. Such a session may contain notes for other developers,
 a session in which two non-paring developers might connect to do some impromptu knowledge
 transfer, or contain a continuous stream of exception logs / long lived connections
-to servers. In this way, the "bulletin board" server can function a virtual meeting ground
-to facilitate less-formal, teamwide interaction. This is especially useful in a distributed
-setting.
+to servers. In this way, the "bulletin board" server can function a virtual meeting ground.
+
+--------------------------------------------------------------------------------
+
+#dirmark.sh
+
+Dirstack is great when you're jumping within a linear directory structure. eg,
+going from
+
+    /a/b/c/d/e
+    /a/b/c
+    /a/b/c/d
+    /a/b/c
+    /a/b/c/d/e
+
+But, if you're jumping between three or four different directories repeatedly,
+it's pretty annoying to work out how to get the stack to play fair with you.
+
+Take, for instance, the case of the ruby application-with-custom-middleware.
+You might have a structure like:
+
+    /code/app
+    /code/middleware
+    /code/backend/server/api/libs
+
+Basically, what you want to be able to jump from app to the `libs` subdir to
+the middleware subdir, and be able to go "back" that's easy enough, it'd be:
+
+    dirstack push ../middleware #put PWD on the stack, go to middleware dir
+    dirstack push . # put ../middleware on top of the stack
+    dirstack swap # make ../app be the top of the stack, with middleware below
+
+Now I'm in middleware, and I can `dirstack pop` to get to the app dir, and if
+I do that again, I'll jump back to middleware, and that's the end. If I want
+to preserve the stack as I go, I'd have to use:
+
+    dirstack push .
+    dirstack swap
+    dirstack pop
+
+God help you when you want to include jumping to subdirectories, or a third
+member of this `cd` tango.
+
+Enter `dirmark`, dirmark is basic bookmarking for directories. The idea is
+easy enough, in the above scenario, instead of the ds nightmare, we want
+this:
+
+    #in --/app
+    dirmark mark: current as: APP
+    cd ../middleware
+    dirmark mark: current as: MID
+    cd ../wherever/else/you/like
+    dirmark mark: current as: SOMEWHERE
+    # ... later ...
+    dirmark goto: APP
+    # PWD is now --/app
+
+That's a little annoying though, with the current's everywhere, so we should
+support:
+
+    dirmark as: <NAME> #mark's the current directory as <NAME>
+
+We also should be able to do
+
+    dirmark mark: /some/path as: <NAME>
+
+This, in addition to some support methods (clear, show, etc), would totally
+solve our problem. The true value comes when you have to jump to distant
+directories (like, perhaps, when you have to jump from the source for some
+ruby gem and back to your app)
