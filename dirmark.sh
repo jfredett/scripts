@@ -29,12 +29,19 @@ function dirmark {
     ${DIRMARK_STORAGE:="$HOME/.dirmark"}
   }
 
+  function jump_to {
+    local jump_dir=$(assoc_array retrieve: $1)
+    cd $jump_dir
+  }
+
   #################
 
+  check_environment
   case "$1" in
     mark:) case "$3" in
               as:) mark_dir "$2" "$4"
            esac ;;
+    jump:) jump_to $2
     as:) "$PWD" "$2" ;;
     clear) case $2 in
               mark:) if [ $3 ] ; then

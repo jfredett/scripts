@@ -323,3 +323,26 @@ This, in addition to some support methods (clear, show, etc), would totally
 solve our problem. The true value comes when you have to jump to distant
 directories (like, perhaps, when you have to jump from the source for some
 ruby gem and back to your app)
+
+--------------------------------------------------------------------------------
+
+# assoc_array
+
+An associative array implementation in pure bash using files for persistence over
+time.
+
+usage:
+
+assoc_array from: <PERSISTING_FILE>
+
+followed by any of:
+
+    ... delete_key: <KEY>           # deletes the key from the list if present.
+                                    #  does nothing (and returns -1) if not present.
+    ... key: <KEY> value: <VALUE>   # inserts the given value for the key
+    ... retrieve: <KEY>             # returns the value of the given key
+    ... show                        # shows the contents of the array
+    ... clear                       # clears the array
+
+the efficiency of these things is minimal, mostly O(n) or worse. Future plans
+may include using Redis or something.
