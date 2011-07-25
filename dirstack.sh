@@ -96,6 +96,8 @@ function dirstack() {
   }
 
   function swap() {
+    local size=$(dirstack size)
+    [ "$size" -lt "1" ] && echo "Stack size too small" && return -1
     local top=$(dirstack peek 2> /dev/null)
     dirstack burn 2> /dev/null
     local next=$(dirstack peek 2> /dev/null)
