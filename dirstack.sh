@@ -96,9 +96,9 @@ function dirstack() {
   }
 
   function swap() {
-    local top=$(dirstack peek)
+    local top=$(dirstack peek 2> /dev/null)
     dirstack burn 2> /dev/null
-    local next=$(dirstack pop)
+    local next=$(dirstack peek 2> /dev/null)
     dirstack burn 2> /dev/null
     dirstack force "$top"
     dirstack force "$next"
@@ -116,6 +116,7 @@ function dirstack() {
 
   function reload_dirstack() {
     source $HOME/.bash/dirstack.sh
+    dirstack clear
   }
 
   function check_environment() {
@@ -161,7 +162,7 @@ HELP
      # if you want to use it, and later I break it, it's not my problem.
      reload)    reload_dirstack         ;;
      nonempty?) not_empty               ;;
-     force)     force                   ;;
+     force)     force $2                ;;
 
      #catch-all
      *)         dirstack_help           ;;
