@@ -1,0 +1,11 @@
+. bull.sh ; bull
+
+ctx "dirstack"
+  desc "push"
+    it "should increase the stack size by one"
+    ti
+
+    it "should be idempotent with burn"
+    ti
+  csed
+xtx
