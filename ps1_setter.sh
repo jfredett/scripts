@@ -13,6 +13,12 @@ function ps1_setter() {
     echo -n "${PWD#$(echo $PWD | xargs dirname | xargs dirname)/}"
   }
 
+  function annoying_mode() {
+    if [ -n "$ANNOY_MODE" ] ; then
+      say -v cellos "$(history | tail -n1 | cut -c 8-)" &>/dev/null &
+    fi
+  }
+
   function ps1() {
     local git=$(gitspy ps1)
     local ruby=$(rvmspy ps1)
@@ -20,7 +26,7 @@ function ps1_setter() {
     local clock_state="$(clock ps1)"
     local current_dir="($(current_dir))"
 
-    export PS1=$(squish_spaces "$current_dir $ruby $clock_state $git $stack \n∫∫∫ ")
+    export PS1=$(squish_spaces "$current_dir $ruby $clock_state $git $stack $(annoying_mode) \n∫∫∫ ")
   }
 
   ps1
