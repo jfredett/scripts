@@ -35,3 +35,6 @@ alias sl=ls
 
 alias clobber="rake db:drop:all db:create:all db:migrate db:test:prepare"
 alias hammer="clobber"
+
+alias ANNOYMODE="export ANNOY_MODE=1"
+alias SHUTUP="unset ANNOY_MODE"
