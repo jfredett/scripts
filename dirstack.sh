@@ -54,6 +54,12 @@ function dirstack() {
     rm $DIRSTACK_SWAP_FILE
   }
 
+  function jump() {
+    dirstack empty? && return 1
+    dirstack dup
+    dirstack pop
+  }
+
   function peek() {
     dirstack nonempty?  && tail -n1 "$DIRSTACK_DEFAULT_STACK" && return 0
     empty_stack_message && return 1
@@ -157,6 +163,7 @@ usage: dirstack <command> [options]
 the commands are:
   push [PATH] | push a directory onto the stack, if PATH is not provided, then the CWD is pushed
   pop         | pop a directory off the stack (if the stack is non-empty), cd to that directory
+  jump        | jump to a directory without popping it off the stack
   dup         | duplicates the top element of the stack
   peek        | view the top directory on the stack
   show        | view the whole stack
@@ -182,6 +189,7 @@ HELP
      burn)      burn                    ;;
      empty?)    is_empty                ;;
      size)      size_ds                 ;;
+     jump)      jump                    ;;
      ps1)       gen_ps1                 ;;
 
      #private -- anything in here represents an unsupported function
