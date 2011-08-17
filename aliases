@@ -30,6 +30,9 @@ alias pop="dirstack pop"
 alias ds="dirstack"
 
 
+alias sweep="rm ~/tmp/*.swp"
+
+
 
 alias sl=ls
 
