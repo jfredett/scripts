@@ -46,4 +46,169 @@ with all other spacing preserved. eg:
 
      bar     | does a thing
 
+-------------------------------------------------------------------------------
 
+#tmuxen.sh
+
+##SYN
+
+tmuxen.sh provides functions for managing multiple-concurrent tmux sessions,
+with decoupled windows. That is to say, two different terminals (perhaps remote
+) can connect to the same tmux session, observe different windows simultaneously,
+and (assuming they're on different windows) edit content simultaneously.
+
+tmux already provides this functionality, but access to it is non-trivial, and
+leaves some garbage which needs to be collected periodically. This script aims
+to simplify and automate those processes.
+
+in addition, tmuxen.sh represents an opinionated configuration of tmux, designed
+to be trivial to install and start using. It further provides a way to script
+ohe setup of a "shared" environment which will be syndicated across multiple
+sessions. See (USE CASES)[] for details thereupon.
+
+##INTERFACE
+
+    tmux spawn <session> [-w <script>]
+
+spawns a new session with <session> as the name, does not attach to the session
+if <script> is provided, then that script is run in with <session> as it's first
+argument. This may be used to script the setup of a tmux environment.
+
+    tmux connect <session>
+
+attaches to an existing session, but in a desynced way, as described above
+
+    tmux kill <session>
+
+kills the named session, and detaches all attached tmuxen
+
+    tmux prune <session>
+
+removes all sessions to which noone is attached.
+kills the named session, and detaches all attached tmuxen
+
+    tmux prune <session>
+
+removes all but the original tmux session -- do not issue to a subsession.
+
+##INSTALLATION
+
+if you have downloaded the script already, running
+
+    tmux install-tmuxen [--no-conf]
+
+will install the wrapper script, and the config (unless the --no-conf option
+is passed). If there is an existing `.tmux.conf` in your $HOME, then it will be
+moved to `.tmux.conf.existing`
+
+if you want to remove tmuxen, running
+
+    tmux tmuxen-implode
+
+will remove the wrapper script, restore normal tmux functionality, and -- if
+`.tmux.conf.existing` exists, will prompt you to swap your current `.tmux.conf`
+for that (writing `.tmux.conf` to `.tmux.conf.tmuxen` in the process)
+
+##ROADMAP
+
+  v0.1.0 goals:
+
+    1) all command functionality present, with manual testing
+    2) config included in script
+    3) bash bomb installation (a la bash + curl / bash + wget)
+
+  v0.5.0 goals:
+
+    1) install/implode functionality in place,
+    2) some automatic testing where possible.
+        (unit testing bash scripts is often non-trivial)
+
+  v1.0.0 goals:
+
+    1) scripting/hooks for commands.
+    2) full automatic testing suite (dependent on building such a thing)
+
+  >v1.0.0 goals:
+
+    merge some of this functionality into tmux proper? :)
+
+##GLOSSARY
+
+    tmux, n. (pl. "tmuxen")
+
+1. A tool for multiplexing a terminal emulator.
+
+2. A single named session of the tmux multiplexer.
+
+    to tmux, v.
+
+1. To make use of the "tmux" tool, "tmuxen" is an irregular gerund form of this
+  verb.
+
+    session, n.
+
+1. A set of attached clients to a given tmux, eg, I have a "play" session, which
+  has three clients attached
+
+    client, n.
+
+1. A single terminal emulator, running the tmux program, which is attached
+  to a single session.
+
+    to attach, v.
+
+1. To add oneself (syncronously) to a session. Meaning that your terminal will
+  exactly mirror any other terminal attached to that session
+
+    to connect, v.
+1. To add oneself (desyncronously) to a session. Meaning that your terminal is
+  free to move to another shell in the session
+
+    window, n. (syn: "subshell", "shell", "terminal")
+
+1. A single multiplex terminal emulator within a given tmux
+
+
+##USE CASES
+
+  1. Sharing an IRC session across a "work" and "play" tmux
+
+I start by spawning a tmux via `tmux spawn irc`, in which I execute my favorite
+IRC client. Also, I turn off the statusline for this tmux.
+
+I then spawn two more tmuxen, eg `tmux spawn work` and `tmux spawn play`. In each,
+I open a shell and attach to the "irc" tmux. This is a syncronous attachment, but
+there is only one window. The effect is that I have joined these two tmuxen to
+each other, spawning only one instance of the irc program.
+
+This use case also fits when you want to share rtorrent/mpd players/similar "global"
+programs, but want to separate, as is implied, work from play.
+
+  2. High-speed pair programming
+
+Jack and Jill are writing code, Jack sets up a user account for Jill on his system,
+Jill ssh's to Jack's system and connects to a tmux session. While Jack is writing
+up a test, Jill is in another window, setting opening up some files which will need
+be edited to make the test pass. Jill takes over driving while Jack watches and runs
+the tests. Jill asks Jack to run a migration to add a property they agree they'll need.
+While Jack writes the migration, Jill finishes cleaning up the code and gets ready
+to run the migration.
+
+The benefit here is that this style of high-speed driver switching means you don't have
+the dreaded "drag along developer" problem. Wherein one member of the pair is doing
+all the code, and the other is doing nothing but twiddling his thumbs and catching spelling
+errors. This methodology also is useful in bringing new developers onto the project,
+since they can handle the more tedious (in the eyes of the more experienced developer) tasks
+which teach the fundamental aspects of the system, while the main developer is free
+to focus on extending (and explaining) the more esoteric/complex feature they may be
+working on.
+
+  3. Bulletin board
+
+For a particularly odd usage, imagine a single machine is running a tmux to which
+many developers in a team attach. Such a session may contain notes for other developers,
+a session in which two non-paring developers might connect to do some impromptu knowledge
+transfer, or contain a continuous stream of exception logs / long lived connections
+to servers. In this way, the "bulletin board" server can function a virtual meeting ground
+to facilitate less-formal, teamwide interaction. This is especially useful in a distributed
+setting.
