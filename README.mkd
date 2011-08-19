@@ -71,8 +71,8 @@ sessions. See (USE CASES)[] for details thereupon.
     tmux spawn <session> [-w <script>]
 
 spawns a new session with <session> as the name, does not attach to the session
-if <script> is provided, then that script is run in with <session> as it's first
-argument. This may be used to script the setup of a tmux environment.
+if <script> is provided, that script is executed with the session's name as it's
+first argument. This allows the scripting of the setup of the new session.
 
     tmux connect <session>
 
@@ -82,10 +82,9 @@ attaches to an existing session, but in a desynced way, as described above
 
 kills the named session, and detaches all attached tmuxen
 
-    tmux prune <session>
+    tmux garbage [<session>]
 
 removes all sessions to which noone is attached.
-kills the named session, and detaches all attached tmuxen
 
     tmux prune <session>
 
@@ -93,21 +92,25 @@ removes all but the original tmux session -- do not issue to a subsession.
 
 ##INSTALLATION
 
-if you have downloaded the script already, running
+if you have downloaded the script already, and it's in /tmp, or on your $PATH,
+running:
 
     tmux install-tmuxen [--no-conf]
 
 will install the wrapper script, and the config (unless the --no-conf option
-is passed). If there is an existing `.tmux.conf` in your $HOME, then it will be
-moved to `.tmux.conf.existing`
+is passed). If there is an existing `.tmux.conf` in your $HOME, you will be
+informed of any conflicts found during a merge attempt, your original will be
+placed in `.tmux.conf.orig`, if there are conflicts, tmuxen's original will
+be placed at `.tmux.conf`, and the attempt at merging will be placed at
+`.tmux.conf.merge`. tmux uses the `merge` tool.
 
 if you want to remove tmuxen, running
 
     tmux tmuxen-implode
 
-will remove the wrapper script, restore normal tmux functionality, and -- if
-`.tmux.conf.existing` exists, will prompt you to swap your current `.tmux.conf`
-for that (writing `.tmux.conf` to `.tmux.conf.tmuxen` in the process)
+will restore normal tmux functionality, and -- if `.tmux.conf.existing` exists,
+will prompt you to swap your current `.tmux.conf` for that (writing `.tmux.conf`
+to `.tmux.conf.tmuxen` in the process)
 
 ##ROADMAP
 

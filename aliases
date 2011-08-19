@@ -28,6 +28,7 @@ alias bundle-all="for i in \`ls $PWD\`; do cd \"$i\"; echo \"exec bundle in: $i\
 alias push="dirstack push"
 alias pop="dirstack pop"
 alias ds="dirstack"
+alias jump="dirstack jump"
 
 
 alias sweep="rm ~/tmp/*.swp"
