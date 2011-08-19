@@ -17,7 +17,7 @@
 
 
 function tmuxen {
-
+  source "tmuxen-find.sh"
 
   killsession() {
     for session in `tmuxen find-sessions "$1"` ; do
@@ -49,14 +49,11 @@ function tmuxen {
     tmuxen present? "$1" && return 1 || return 0
   }
 
+  #private
+
   get-instance-number() {
     local curr=$(tmuxen find-sessions "$1" | tail -n1)
     [ -n "$2" ] && echo -n $((curr + 1)) || echo -n "1"
-  }
-
-  find-sessions() {
-    [ $2 ] && prepend="$2-"
-    tmux ls | grep "$1" | sed -n "s/$1-\(.*\): .*/$prepend\1/p" | sort -n
   }
 
   ############ DISPATCH ###############
@@ -68,6 +65,7 @@ function tmuxen {
     absent?)                absent $2                                    ;;
     spawn)                  spawn $2 $([ "$3" = "-w" ] && echo "$4")     ;;
     connect)                connect $2                                   ;;
+    find)                   find $2 $3                                   ;;
 
     # non-public
 
