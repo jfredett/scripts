@@ -70,8 +70,8 @@ sessions. See (USE CASES)[] for details thereupon.
 
     tmux spawn <session> [-w <script>]
 
-spawns a new session with <session> as the name, does not attach to the session
-if <script> is provided, that script is executed with the session's name as it's
+spawns a new session with <session> as the name, does not attach to the session.
+If <script> is provided, that script is executed with the session's name as it's
 first argument. This allows the scripting of the setup of the new session.
 
     tmux connect <session>
@@ -84,11 +84,53 @@ kills the named session, and detaches all attached tmuxen
 
     tmux garbage [<session>]
 
-removes all sessions to which noone is attached.
+removes all duplicated connections to the given session to which noone is attached.
+If no session is given, does this for all sessions. Eg, assume there are sessions
+like:
+
+      foo     A
+      foo-1
+      foo-2   A
+      bar
+      bar-1
+      bar-2
+
+Running `tmux garbage foo` will leave you with:
+
+      foo   A
+      foo-2 A
+      bar
+      bar-1
+      bar-2
+
+and running `tmux garbage` will leave you with:
+
+      foo   A
+      foo-2 A
+      bar
+
+The next foo session will be foo-3. It is suggested that this command is run often, to
+avoid cluttering your tmux server and potentially affecting performance.
 
     tmux prune <session>
 
-removes all but the original tmux session -- do not issue to a subsession.
+removes all but the original tmux session, removes even clients attached in sub-sessions.
+Eg, given
+
+      foo     A
+      foo-1
+      foo-2   A
+      bar
+      bar-1
+      bar-2
+
+Running `tmux prune foo`, will give:
+
+      foo     A
+      bar
+      bar-1
+      bar-2
+
 
 ##INSTALLATION
 
