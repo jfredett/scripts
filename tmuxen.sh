@@ -19,35 +19,26 @@
 function tmuxen {
 
 
+  killsession() {
+    for session in `tmuxen find-sessions "$1"` ; do
+      tmux kill-session -t "$session"
+    done
+  }
+
   spawn() {
-    local session="$1"
-    local script="$2"
+    local session="$1" ; local script="$2"
 
-    if tmuxen absent? "$session" ; then
-      tmux new-session -d -s "$session"
-    fi
-
-    [ $VERBOSE ] && echo $script
-
+    tmuxen absent? "$session" && tmux new-session -d -s "$session"
     [ -n "$script" ] && eval "$script $session"
   }
 
   connect() {
     local session="$1"
 
-    [ $VERBOSE ] && echo $session
-    if tmuxen absent? "$session" ; then
-      echo "$session does not exist, cannot connect"
-    else
-      local inum="-$(tmuxen get-instance-number "$session" inc)"
-      tmux new-session -t "$session" -s "$session$inum"
-    fi
-  }
+    tmuxen absent? "$session" && echo "$session does not exist, cannot connect" && return 1
 
-  get-instance-number() {
-    local curr=$(tmux ls | grep "$1" | sed -n "s/$1-\(.*\): .*/\1/p" | sort -n | tail -n1)
-    [ $VERBOSE ] && echo $2
-    [ -n "$2" ] && echo -n $((curr + 1)) || echo -n "1"
+    local inum="-$(tmuxen get-instance-number "$session" inc)"
+    tmux new-session -t "$session" -s "$session$inum"
   }
 
   present() {
@@ -56,6 +47,16 @@ function tmuxen {
 
   absent() {
     tmuxen present? "$1" && return 1 || return 0
+  }
+
+  get-instance-number() {
+    local curr=$(tmuxen find-sessions "$1" | tail -n1)
+    [ -n "$2" ] && echo -n $((curr + 1)) || echo -n "1"
+  }
+
+  find-sessions() {
+    [ $2 ] && prepend="$2-"
+    tmux ls | grep "$1" | sed -n "s/$1-\(.*\): .*/$prepend\1/p" | sort -n
   }
 
   ############ DISPATCH ###############
