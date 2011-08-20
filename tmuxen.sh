@@ -60,8 +60,8 @@ function tmuxen {
   #private
 
   get-instance-number() {
-    local curr=$(tmuxen find-sessions "$1" | tail -n1)
-    [ -n "$2" ] && echo -n $((curr + 1)) || echo -n "1"
+    local curr=$(tmuxen find subsessions "$1" | sed -n "s/$1-//p" | tail -n1)
+    [ -n "$2" ] && echo -n $((curr + 1)) || echo -n "$curr"
   }
 
   ############ DISPATCH ###############
@@ -74,7 +74,7 @@ function tmuxen {
     connect)                connect $2                                                     ;;
     find)                   find $2 $3                                                     ;;
     usage|help)             usage "$PWD/$0"                                                ;;
-    version)                version                                                        ;;
+    tmuxen-version)         version                                                        ;;
     kill)                   killsessions "{ tmuxen find sessions $2; };"                   ;;
     prune)                  [ $2 ] && killsessions "{ tmuxen find subsessions $2; };" \
                                    || echo "Must provide session name"                     ;;
@@ -84,6 +84,11 @@ function tmuxen {
 
     respond-to?)            responds_to $2                                                 ;;
     get-instance-number)    get-instance-number $2 $3                                      ;;
+
+    #proxy tmux
+
+    *)                      tmux $@                                                        ;;
+
   esac
 }
 
