@@ -33,6 +33,7 @@ alias jump="dirstack jump"
 
 alias sweep="rm ~/tmp/*.swp"
 
+alias tmux="tmuxen"
 
 
 alias sl=ls
