@@ -64,7 +64,7 @@ to simplify and automate those processes.
 in addition, tmuxen.sh represents an opinionated configuration of tmux, designed
 to be trivial to install and start using. It further provides a way to script
 ohe setup of a "shared" environment which will be syndicated across multiple
-sessions. See (USE CASES)[] for details thereupon.
+sessions. See [USE CASES]() for details thereupon.
 
 ##INTERFACE
 
