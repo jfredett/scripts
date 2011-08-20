@@ -7,14 +7,21 @@
 #
 #usage: tmux <command>
 #
-# present? <session>               | exits with code 0 if session present, code 1
-#                                    otherwise (quiet alias for 'has').
-# absent? <session>                | exits with code 1 if session present, code 0 otherwise.
-# spawn <session> [-w <script>]    | Spawns a new session without attaching, executes
-#                                    <script> if provided.
-# connect <session>                | Connects to <session> desynchronously if it exists.
-# version                          | reports the current version
-# usage, help                      | print this help, and the tmux help
+#commands:
+#
+#present? <session>               | exits with code 0 if session present, code 1
+#                                   otherwise (quiet alias for 'has').
+#absent? <session>                | exits with code 1 if session present, code 0 otherwise.
+#spawn <session> [-w <script>]    | Spawns a new session without attaching, executes
+#                                   <script> if provided.
+#connect <session>                | Connects to <session> desynchronously if it exists.
+#kill <session>                   | kills <session> and all attached subsessions.
+#garbase [<session>]              | kills all unattached sessions (or subsessions of <session>,
+#                                   if given), but not the root session.
+#prune <session>                  | kills all subsessions of the given session, even if the
+#                                 | subsession is still attached
+#version                          | reports the current version
+#usage, help                      | print this help, and the tmux help
 #
 #USAGE
 
