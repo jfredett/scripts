@@ -1,23 +1,27 @@
-# tmuxen -- manage multiple maverick multiplexers, methodically
+#!/bin/bash
+#USAGE
 #
-# Wrapper for tmux
+#tmuxen -- manage multiple maverick multiplexers, methodically
 #
-# usage
+#Wrapper for tmux
 #
-#    present? <session>               | exits with code 0 if session present, code 1
-#                                       otherwise (quiet alias for 'has').
-#    absent? <session>                | exits with code 1 if session present, code 0
-#                                       otherwise.
-#    spawn <session> [-w <script>]    | Spawns a new session without attaching, executes
-#                                       <script> if provided.
-#    connect <session>                | Connects to <session> desynchronously if it
-#                                       exists.
+#usage: tmux <command>
 #
+# present? <session>               | exits with code 0 if session present, code 1
+#                                    otherwise (quiet alias for 'has').
+# absent? <session>                | exits with code 1 if session present, code 0 otherwise.
+# spawn <session> [-w <script>]    | Spawns a new session without attaching, executes
+#                                    <script> if provided.
+# connect <session>                | Connects to <session> desynchronously if it exists.
+# tmuxen-version                   | reports the current version
+# usage, help                      | print this help, and the tmux help
 #
+#USAGE
 
 
 function tmuxen {
   source "tmuxen-find.sh"
+  source "usage.sh"
 
   killsession() {
     for session in `tmuxen find-sessions "$1"` ; do
@@ -49,6 +53,10 @@ function tmuxen {
     tmuxen present? "$1" && return 1 || return 0
   }
 
+  version() {
+    echo "v0.0.1"
+  }
+
   #private
 
   get-instance-number() {
@@ -66,6 +74,8 @@ function tmuxen {
     spawn)                  spawn $2 $([ "$3" = "-w" ] && echo "$4")     ;;
     connect)                connect $2                                   ;;
     find)                   find $2 $3                                   ;;
+    usage|help)             usage "$PWD/$0"                              ;;
+    version)                version                                      ;;
 
     # non-public
 
