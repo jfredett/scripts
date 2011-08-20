@@ -9,19 +9,19 @@
 #
 #commands:
 #
-#present? <session>               | exits with code 0 if session present, code 1
-#                                   otherwise (quiet alias for 'has').
-#absent? <session>                | exits with code 1 if session present, code 0 otherwise.
-#spawn <session> [-w <script>]    | Spawns a new session without attaching, executes
-#                                   <script> if provided.
-#connect <session>                | Connects to <session> desynchronously if it exists.
-#kill <session>                   | kills <session> and all attached subsessions.
-#garbase [<session>]              | kills all unattached sessions (or subsessions of <session>,
-#                                   if given), but not the root session.
-#prune <session>                  | kills all subsessions of the given session, even if the
-#                                 | subsession is still attached
-#version                          | reports the current version
-#usage, help                      | print this help, and the tmux help
+#   present? <session>               | exits with code 0 if session present, code 1
+#                                      otherwise (quiet alias for 'has').
+#   absent? <session>                | exits with code 1 if session present, code 0 otherwise.
+#   spawn <session> [-w <script>]    | Spawns a new session without attaching, executes
+#                                      <script> if provided.
+#   connect <session>                | Connects to <session> desynchronously if it exists.
+#   kill <session>                   | kills <session> and all attached subsessions.
+#   garbase [<session>]              | kills all unattached sessions (or subsessions of <session>,
+#                                      if given), but not the root session.
+#   prune <session>                  | kills all subsessions of the given session, even if
+#                                      the subsession is still attached
+#   version                          | reports the current version
+#   usage, help                      | print this help, and the tmux help
 #
 #USAGE
 
@@ -83,7 +83,7 @@ VERS
     spawn)                  spawn $2 $([ "$3" = "-w" ] && echo "$4")                       ;;
     connect)                connect $2                                                     ;;
     find)                   find $2 $3                                                     ;;
-    usage|help)             usage "$PWD/$0"                                                ;;
+    usage|help)             echo "$PWD/$0" ; usage "$PWD/$0"                               ;;
     version)                version                                                        ;;
     kill)                   killsessions "{ tmuxen find sessions $2; };"                   ;;
     prune)                  [ $2 ] && killsessions "{ tmuxen find subsessions $2; };" \
@@ -97,8 +97,9 @@ VERS
 
     #proxy tmux
 
-    *)                      tmux $@                                                        ;;
+    *)                      tmux $@ || tmuxen usage                                        ;;
 
   esac
 }
 
+tmuxen $@
