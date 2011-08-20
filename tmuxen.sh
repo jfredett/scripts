@@ -13,7 +13,7 @@
 # spawn <session> [-w <script>]    | Spawns a new session without attaching, executes
 #                                    <script> if provided.
 # connect <session>                | Connects to <session> desynchronously if it exists.
-# tmuxen-version                   | reports the current version
+# version                          | reports the current version
 # usage, help                      | print this help, and the tmux help
 #
 #USAGE
@@ -54,7 +54,10 @@ function tmuxen {
   }
 
   version() {
-    echo "v0.0.1"
+    cat <<-VERS
+tmuxen 0.0.1
+`tmux -V`
+VERS
   }
 
   #private
@@ -74,7 +77,7 @@ function tmuxen {
     connect)                connect $2                                                     ;;
     find)                   find $2 $3                                                     ;;
     usage|help)             usage "$PWD/$0"                                                ;;
-    tmuxen-version)         version                                                        ;;
+    version)                version                                                        ;;
     kill)                   killsessions "{ tmuxen find sessions $2; };"                   ;;
     prune)                  [ $2 ] && killsessions "{ tmuxen find subsessions $2; };" \
                                    || echo "Must provide session name"                     ;;
