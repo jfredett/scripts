@@ -4,8 +4,8 @@ function find {
     by-name "$1" | sed -n "s/\(.*\): .*/\1/p"
   }
 
-  session() {
-    by-name "$1" | sed -n "s/$1-//p" | sort -n
+  subsessions() {
+    by-name "$1" | sed -n "s/\($1-.*\): .*$/\1/p" | sort -n
   }
 
   by-name() {
@@ -13,12 +13,20 @@ function find {
   }
 
   unattached() {
-    by-name | grep -v "(attached)"
+    by-name "$1" | grep -v "(attached)"
   }
 
   attached() {
     by-name "$1" | grep "(attached)"
   }
 
-  $1 $2
+  gc-sessions() {
+    unattached | sed -n "s/\($1-.*\): .*$/\1/p" | sort -n
+  }
+
+  live-sessions() {
+    attached | sed -n "s/\($1.*\): .*$/\1/p" | sort -n
+  }
+
+  $@
 }

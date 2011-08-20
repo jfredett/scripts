@@ -23,8 +23,8 @@ function tmuxen {
   source "tmuxen-find.sh"
   source "usage.sh"
 
-  killsession() {
-    for session in `tmuxen find-sessions "$1"` ; do
+  killsessions() {
+    for session in $(eval "$1") ; do
       tmux kill-session -t "$session"
     done
   }
@@ -69,18 +69,21 @@ function tmuxen {
   case $1 in
     # public
 
-    present?)               present $2                                   ;;
-    absent?)                absent $2                                    ;;
-    spawn)                  spawn $2 $([ "$3" = "-w" ] && echo "$4")     ;;
-    connect)                connect $2                                   ;;
-    find)                   find $2 $3                                   ;;
-    usage|help)             usage "$PWD/$0"                              ;;
-    version)                version                                      ;;
+    present?)               present $2                                                     ;;
+    spawn)                  spawn $2 $([ "$3" = "-w" ] && echo "$4")                       ;;
+    connect)                connect $2                                                     ;;
+    find)                   find $2 $3                                                     ;;
+    usage|help)             usage "$PWD/$0"                                                ;;
+    version)                version                                                        ;;
+    kill)                   killsessions "{ tmuxen find sessions $2; };"                   ;;
+    prune)                  [ $2 ] && killsessions "{ tmuxen find subsessions $2; };" \
+                                   || echo "Must provide session name"                     ;;
+    garbage)                killsessions "{ tmuxen find gc-sessions $2; };"                ;;
 
     # non-public
 
-    respond-to?)            responds_to $2                               ;;
-    get-instance-number)    get-instance-number $2 $3                    ;;
+    respond-to?)            responds_to $2                                                 ;;
+    get-instance-number)    get-instance-number $2 $3                                      ;;
   esac
 }
 
