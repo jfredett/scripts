@@ -102,4 +102,3 @@ VERS
   esac
 }
 
-tmuxen $@
