@@ -1,0 +1,49 @@
+#usage.sh
+
+#SYN
+
+Reads from the top of a shell script for a comment line like "#USAGE", reads 
+again, recording all the input, till it sees "#USAGE", at which point it generates
+a function "usage" in the current namespace which displays that information
+
+#USAGE
+(meta, I know.)
+
+imagine a script like:
+
+    #!/bin/bash
+    #USAGE
+    # bar     | does a thing
+    #USAGE
+    function foo {
+        bar() {
+          echo "baz"
+        }
+    }
+
+if you do:
+
+    #!/bin/bash
+    #USAGE
+    # bar     | does a thing
+    #USAGE
+    function foo {
+        source "usage.sh"
+
+        bar() {
+          echo "baz"
+        }
+        
+        case $1 in 
+          bar) bar
+          usage) usage $PWD/$0
+        esac
+    }
+    foo $@
+
+and reply by echoing the content between "#USAGE" tags, without the '#'s, and 
+with all other spacing preserved. eg:
+
+     bar     | does a thing
+
+
