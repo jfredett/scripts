@@ -134,17 +134,9 @@ Running `tmux prune foo`, will give:
 
 ##INSTALLATION
 
-if you have downloaded the script already, and it's in /tmp, or on your $PATH,
-running:
+install with:
 
-    tmux install-tmuxen [--no-conf]
-
-will install the wrapper script, and the config (unless the --no-conf option
-is passed). If there is an existing `.tmux.conf` in your $HOME, you will be
-informed of any conflicts found during a merge attempt, your original will be
-placed in `.tmux.conf.orig`, if there are conflicts, tmuxen's original will
-be placed at `.tmux.conf`, and the attempt at merging will be placed at
-`.tmux.conf.merge`. tmux uses the `merge` tool.
+    curl <url> | sh
 
 if you want to remove tmuxen, running
 
