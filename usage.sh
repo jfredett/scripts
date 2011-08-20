@@ -17,7 +17,7 @@ usage() {
   local seen=""
   local line=""
 
-  exec 3<> $1
+  exec 3<> "$1"
   while read line <&3 ; do
     if [ "$line" = "#USAGE" ] ; then
       if [ $seen ] ; then
