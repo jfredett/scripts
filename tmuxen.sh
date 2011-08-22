@@ -80,10 +80,11 @@ VERS
     # public
 
     present?)               present $2                                                     ;;
+    absent?)                absent $2                                                      ;;
     spawn)                  spawn $2 $([ "$3" = "-w" ] && echo "$4")                       ;;
     connect)                connect $2                                                     ;;
     find)                   find $2 $3                                                     ;;
-    usage|help)             echo "$PWD/$0" ; usage "$PWD/$0"                               ;;
+    usage|help)             usage "$0"                                                     ;;
     version)                version                                                        ;;
     kill)                   killsessions "{ tmuxen find sessions $2; };"                   ;;
     prune)                  [ $2 ] && killsessions "{ tmuxen find subsessions $2; };" \
