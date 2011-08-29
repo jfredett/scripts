@@ -25,7 +25,7 @@ function clock {
     local color="RED"
     [ "$status" = "in" ] && color="LGTGRN"
 
-    echo "($(set_color LGTGRN "clocked $status"))"
+    echo "($(set_color "$color" "clocked $status"))"
   }
 
   case $1 in
