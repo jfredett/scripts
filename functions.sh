@@ -34,3 +34,7 @@ function set_color() {
     *)         printf "%s" "$val" ;;
   esac
 }
+
+function squish_spaces() {
+  echo "$(echo "$1" | sed -nE 's/\ +/ /pg')"
+}
