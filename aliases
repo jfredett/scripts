@@ -1,5 +1,6 @@
-
-#load coreutils
+# load time tracking tools
+. $HOME/.bash/clock.sh
+# load coreutils
 . /usr/local/Cellar/coreutils/8.12/aliases
 # common functions
 . $HOME/.bash/functions.sh
