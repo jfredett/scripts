@@ -7,6 +7,7 @@
 function ps1_setter() {
   source ~/.bash/gitspy.sh
   source ~/.bash/rvmspy.sh
+  source ~/.bash/functions.sh
 
   function current_dir() {
     echo -n "${PWD#$(echo $PWD | xargs dirname | xargs dirname)/}"
@@ -17,8 +18,9 @@ function ps1_setter() {
     local ruby=$(rvmspy ps1)
     local stack="$(dirstack ps1)"
     local clock_state="$(clock ps1)"
+    local current_dir="($(current_dir))"
 
-    export PS1="($(current_dir)) $ruby $clock_state $git $stack \n∫∫∫ "
+    export PS1=$(squish_spaces "$current_dir $ruby $clock_state $git $stack \n∫∫∫ ")
   }
 
   ps1
