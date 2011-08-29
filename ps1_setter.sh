@@ -14,7 +14,7 @@ function ps1_setter() {
   }
 
   function annoying_mode() {
-    if [ -n "$ANNOY_MODE" ] ; then
+    if [ "$ANNOY_MODE" = "1" ] ; then
       say -v cellos "$(history | tail -n1 | cut -c 8-)" &>/dev/null &
     fi
   }
@@ -26,7 +26,7 @@ function ps1_setter() {
     local clock_state="$(clock ps1)"
     local current_dir="($(current_dir))"
 
-    export PS1=$(squish_spaces "$current_dir $ruby $clock_state $git $stack $(annoying_mode) \n∫∫∫ ")
+    export PS1=$(squish_spaces "$current_dir $ruby $clock_state $git $stack \n∫∫∫ "; annoying_mode)
   }
 
   ps1
