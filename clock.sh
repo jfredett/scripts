@@ -3,5 +3,8 @@ function clock_in() {
 }
 
 function clock_out() {
-  echo "out: `date +\"%H:%M:%S %D\"`" >> "$HOME/timesheet"
+  [ "$1" != "--for-today" ] && echo "out: `date +\"%H:%M:%S %D\"`" >> "$HOME/timesheet" && return 0
+  echo "" >> "$HOME/timesheet"
 }
+
+
