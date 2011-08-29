@@ -20,13 +20,12 @@ function clock {
 
   ps1() {
     local status=$(tail -n1 "$HOME/timesheet" | sed -n 's/^\([^:]*\):.*/\1/p')
-    echo "$status"
     [ -z "$status" ] && return
 
     local color="RED"
     [ "$status" = "in" ] && color="LGTGRN"
 
-    echo "($(set_color LGTGRN "$status"))"
+    echo "($(set_color LGTGRN "clocked $status"))"
   }
 
   case $1 in
