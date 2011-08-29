@@ -5,6 +5,8 @@
 . $HOME/.bash/functions.sh
 # global directory stack
 . $HOME/.bash/dirstack.sh
+# tmux completion
+. /usr/local/etc/bash_completion.d/tmux
 
 #common stuff
 alias g="mvim"
@@ -20,9 +22,10 @@ alias vi=vim
 
 alias ls="gls --color=auto"
 
-alias edit-aliases="mvim $HOME/.bash/aliases"
+alias edit-aliases="vim $HOME/.bash/aliases"
 
-alias bundle-all="for i in \`ls $PWD\`; do cd \"$i\"; echo \"exec bundle in: $i\"; bundle install; cd ..; done;"
+#alias bundle-all="for i in \`ls $PWD\`; do cd \"$i\"; echo \"exec bundle in: $i\"; bundle install; cd ..; done;"
+
 
 
 alias push="dirstack push"
