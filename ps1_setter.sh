@@ -16,8 +16,9 @@ function ps1_setter() {
     local git=$(gitspy ps1)
     local ruby=$(rvmspy ps1)
     local stack="$(dirstack ps1)"
+    local clock_state="$(clock ps1)"
 
-    export PS1="($(current_dir)) $ruby $git $stack \n∫∫∫ "
+    export PS1="($(current_dir)) $ruby $clock_state $git $stack \n∫∫∫ "
   }
 
   ps1
