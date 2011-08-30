@@ -40,7 +40,6 @@ function gitspy() {
 
   function git_status() {
     local status=$(git status --porcelain | cut -c 2,2 | sort | uniq 2>/dev/null)
-    
 
     for val in $status ; do
       [ -z "$val" ] && continue 
@@ -48,7 +47,6 @@ function gitspy() {
       [[ "$val" = "M" ]] && set_color "GREEN" "M"
       [[ "$val" = "D" ]] && set_color "RED" "D"
     done
-
   }
 
   function gen_ps1() {
