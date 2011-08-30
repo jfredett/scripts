@@ -64,7 +64,7 @@ function gitspy() {
   }
 
   function is_git_dir() {
-    git status &> /dev/null ; return "$?"
+    git log -1 &> /dev/null ; return "$?"
   }
 
   function not_git_dir() {
