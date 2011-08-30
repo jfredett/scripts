@@ -39,10 +39,10 @@ function gitspy() {
     val=${val##*/}
     [ -z $val ] && return
     case $val in
-      master)         echo $(set_color "RED" $val) ;;
-      WIP*)           echo $(set_color "BLUE" $val) ;;
-      *[:digit:]* )   echo $(set_color "GREEN" $val) ;;
-      *)              echo $(set_color "YELLOW" $val) ;;
+      master)         set_color "RED"    $val ;;
+      WIP*)           set_color "BLUE"   $val ;;
+      *[:digit:]* )   set_color "GREEN"  $val ;;
+      *)              set_color "YELLOW" $val ;;
     esac
   }
 
