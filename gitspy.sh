@@ -38,6 +38,7 @@ function gitspy() {
     local val=$(git symbolic-ref -q HEAD 2>/dev/null)
     val=${val##*/}
     [ -z $val ] && return
+    gitspy current branch is-merge? && set_color "PURPLE" $val && return
     case $val in
       master)         set_color "RED"    $val ;;
       WIP*)           set_color "BLUE"   $val ;;
