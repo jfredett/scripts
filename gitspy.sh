@@ -39,13 +39,15 @@ function gitspy() {
   }
 
   function git_status() {
-    local val=$(git status 2>/dev/null)
+    local status=$(git status --porcelain | cut -c 2,2 | sort | uniq 2>/dev/null)
+    
 
-    [ -z "$val" ] && return
-
-    [[ "${val}" = *Untracked* ]] && printf "%s" $(set_color "YELLOW" "U")
-    [[ "${val}" = *modified*  ]] && printf "%s" $(set_color "GREEN" "M")
-    [[ "${val}" = *deleted*   ]] && printf "%s" $(set_color "RED" "D")
+    for val in $status ; do
+      [ -z "$val" ] && continue 
+      [[ "$val" = "?" ]] && set_color "YELLOW" "U"
+      [[ "$val" = "M" ]] && set_color "GREEN" "M"
+      [[ "$val" = "D" ]] && set_color "RED" "D"
+    done
 
   }
 
