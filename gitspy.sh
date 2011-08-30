@@ -20,6 +20,14 @@ function gitspy() {
     [ -z "$val" ] && echo -n $val
   }
 
+  function last_commit_was_merge_commit() {
+    last_log_message | grep Merge: &>/dev/null
+  }
+
+  function last_log_message() {
+    git log -1 2> /dev/null
+  }
+
   function git_branch_count() {
     local val=$(git branch | wc -l)
     [ -z "$val" ] && return
@@ -103,20 +111,21 @@ Help
   }
 
   case $1 in
-    status) git_status                                       ;;
+    status) git_status                                              ;;
     current) case $2 in
-                committer) last_committer                    ;;
-                commit) current_commit                       ;;
+                committer) last_committer                           ;;
+                commit) current_commit                              ;;
                 branch) case $3 in
-                            count) git_branch_count          ;;
-                            --help) show_help current branch ;;
-                            *) current_branch                ;;
-                        esac                                 ;;
+                            count) git_branch_count                 ;;
+                            is-merge?) last_commit_was_merge_commit ;;
+                            --help) show_help current branch        ;;
+                            *) current_branch                       ;;
+                        esac                                        ;;
                 --help|*) show_help current
-             esac                                            ;;
-    present?) is_git_dir                                     ;;
-    absent?) not_git_dir                                     ;;
-    reload) source ~/.bash/gitspy.sh                         ;;
+             esac                                                   ;;
+    present?) is_git_dir                                            ;;
+    absent?) not_git_dir                                            ;;
+    reload) source ~/.bash/gitspy.sh                                ;;
     ps1) gen_ps1                                             ;;
     help|*) show_help                                        ;;
   esac
