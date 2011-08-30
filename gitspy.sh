@@ -7,17 +7,17 @@
 function gitspy() {
 
   function current_commit() {
-     local val="$(git rev-parse --short --quite HEAD 2> /dev/null)"
+     local val="$(git rev-parse --short HEAD 2> /dev/null)"
      [ -z "$val" ] && return
      set_color "PURPLE" "$val"
   }
 
   function last_committer() {
-    local val=$(git log -n1 2> /dev/null | head -n2 | tail -n1 | cut -c 9-)
-    val=${val%% *}
-    [ -z "$val" ] && return
-    [ $val = "Joe" ] && val=$(set_color "GREEN" $val)
-    echo -n $val
+    local val=$(git log -n1 2> /dev/null | grep "Author:")
+    val=${val##Author: }
+    val=${val%% *} 
+    [ $val = "Joe" ] && set_color "GREEN" $val && return
+    [ -z "$val" ] && echo -n $val
   }
 
   function git_branch_count() {
