@@ -62,13 +62,14 @@ function gitspy() {
     function set_default() {
       echo -n "${1:-$(set_color "RED" "$2")}"
     }
+
     if gitspy present? ; then
       local curr_branch=$(set_default "$(gitspy current branch)" "none")
       local curr_commit=$(set_default "$(gitspy current commit)" "headless")
       local curr_committer=$(set_default "$(gitspy current committer)" "unknown")
-      local curr_status="$(gitspy status)" ; [ "$curr_status" ] && curr_status=" $curr_status"
+      local curr_status="$(gitspy status)"
 
-      echo -n "($curr_branch:$curr_commit:$curr_committer)$curr_status"
+      echo -n "($curr_branch:$curr_commit:$curr_committer) $curr_status"
     fi
   }
 
