@@ -21,7 +21,7 @@ function gitspy() {
   }
 
   function last_commit_was_merge_commit() {
-    last_log_message | grep Merge: &>/dev/null
+    gitspy current log | grep Merge: &>/dev/null
   }
 
   function last_log_message() {
@@ -115,6 +115,7 @@ Help
   case $1 in
     status) git_status                                              ;;
     current) case $2 in
+                log) last_log_message                               ;;
                 committer) last_committer                           ;;
                 commit) current_commit                              ;;
                 branch) case $3 in
