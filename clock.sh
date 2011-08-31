@@ -2,6 +2,11 @@ function clock {
   . $HOME/.bash/functions.sh
 
   clock_in() {
+    if clocked_out ; then 
+      echo "what are you going to work on today?"
+      read project 
+      change_project "$project"
+    fi
     write "in: `time_now`" 
   }
 
