@@ -13,7 +13,7 @@ function gitspy() {
   }
 
   function last_committer() {
-    local val=$(last_log_message | grep "Author:")
+    local val=$(gitspy current log | grep "Author:")
     val=${val##Author: }
     val=${val%% *} 
     [ "$val" = "Joe" ] && set_color "GREEN" $val && return
