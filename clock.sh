@@ -10,6 +10,10 @@ function clock {
    [ "$1" = "--for-today" ] && write " "
   }
 
+  change_project() {
+    write "-- $1"
+  }
+
   write() {
     echo "$1" >> "$HOME/timesheet"
   }
@@ -44,6 +48,7 @@ function clock {
   case $1 in
     in) clock_in ;;
     out) clock_out $2 ;;
+    change) change_project $2 ;;
     ps1) ps1 ;;
   esac
 }
