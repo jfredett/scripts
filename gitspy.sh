@@ -16,8 +16,8 @@ function gitspy() {
     local val=$(last_log_message | grep "Author:")
     val=${val##Author: }
     val=${val%% *} 
-    [ $val = "Joe" ] && set_color "GREEN" $val && return
-    [ -z "$val" ] && echo -n $val
+    [ "$val" = "Joe" ] && set_color "GREEN" $val && return
+    echo -n $val
   }
 
   function last_commit_was_merge_commit() {
