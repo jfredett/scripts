@@ -18,6 +18,19 @@ function clock {
     date +"%H:%M:%S %D"
   }
 
+  clocked_out() {
+    local last=$(last_entry)
+    [ -z $last -o $last = "out:*" ]
+  }
+
+  clocked_in() {
+    [ ! clock_out ]
+  }
+
+  last_entry() {
+    tail -n1 "$HOME/timesheet"
+  }
+
   ps1() {
     local status=$(tail -n1 "$HOME/timesheet" | sed -n 's/^\([^:]*\):.*/\1/p')
     [ -z "$status" ] && return
