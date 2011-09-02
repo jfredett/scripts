@@ -29,7 +29,7 @@ function clock {
 
   clocked_out() {
     local last=$(last_entry)
-    [ -z $last -o $last = "out:*" ]
+    [ -z "$last" -o "$last" = "out:*" ]
   }
 
   clocked_in() {
