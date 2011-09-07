@@ -8,6 +8,8 @@
 . $HOME/.bash/dirstack.sh
 # tmux completion
 . /usr/local/etc/bash_completion.d/tmux
+# load rvmrc creator
+. $HOME/.bash/rvmrc.sh
 
 #common stuff
 alias g="mvim"
