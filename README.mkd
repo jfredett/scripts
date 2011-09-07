@@ -1,3 +1,10 @@
+#rvmrc.sh
+
+##SYN
+
+A simple script which creates a rvmrc interactively. Presents you with a choice of rubies, and then creates the
+gemset name based on the directory name.
+
 #usage.sh
 
 #SYN
