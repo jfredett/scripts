@@ -10,7 +10,7 @@ function ps1_setter() {
   source ~/.bash/functions.sh
 
   function current_dir() {
-    echo -n "${PWD#$(echo $PWD | xargs dirname | xargs dirname)/}"
+    echo -n "${PWD#$(echo "$PWD" | xargs dirname | xargs dirname)/}"
   }
 
   function annoying_mode() {
