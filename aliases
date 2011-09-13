@@ -35,6 +35,7 @@ alias push="dirstack push"
 alias pop="dirstack pop"
 alias ds="dirstack"
 alias jump="dirstack jump"
+alias jt="dirstack jump"
 
 
 alias sweep="rm ~/tmp/*.swp"
