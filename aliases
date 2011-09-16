@@ -45,8 +45,10 @@ alias tmux="/usr/local/bin/tmuxen"
 
 alias sl=ls
 
-alias clobber="rake db:drop:all db:create:all db:migrate db:test:prepare"
+alias clobber="say -v Zarvox 'boom goes the dynamite' && rake db:drop:all db:create:all db:migrate db:test:prepare"
 alias hammer="clobber"
+alias pewpew="git reset --hard HEAD && git clean -f && say -v princess 'pew pew pew'"
+
 
 alias ANNOYMODE="export ANNOY_MODE=1"
 alias SHUTUP="unset ANNOY_MODE"
