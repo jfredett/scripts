@@ -1,54 +1,62 @@
-# load time tracking tools
-. $HOME/.bash/clock.sh
-# load coreutils
-. /usr/local/Cellar/coreutils/8.12/aliases
 # common functions
 . $HOME/.bash/functions.sh
 # global directory stack
 . $HOME/.bash/dirstack.sh
-# tmux completion
-. /usr/local/etc/bash_completion.d/tmux
 # load rvmrc creator
 . $HOME/.bash/rvmrc.sh
 
+# load time tracking tools
+if [ "$OSX" ] ; then 
+    [ -s "$HOME/.bash/clock.sh" ] && source $HOME/.bash/clock.sh
+fi
+
+if which tmux &>/dev/null ; then
+    if [ "$OSX" ] ; then 
+        # tmux completion
+        . /usr/local/etc/bash_completion.d/tmux
+        alias tmux="/usr/local/bin/tmuxen"
+    fi
+fi
+
+if [ "$OSX" ] ; then
+    alias g="mvim"
+    alias ls="gls --color=auto"
+    alias clobber="say -v Zarvox 'boom goes the dynamite' && rake db:drop:all db:create:all db:migrate db:test:prepare"
+    alias hammer="clobber"
+    alias pewpew="git reset --hard HEAD && git clean -f && say -v princess 'pew pew pew'"
+    alias ANNOYMODE="export ANNOY_MODE=1"
+    alias SHUTUP="unset ANNOY_MODE"
+    alias sweep="rm ~/tmp/*.swp"
+
+    # load coreutils
+    . /usr/local/Cellar/coreutils/8.12/aliases
+fi
+
+if [ "$LINUX" ] ; then
+    alias ls="ls --color=auto"
+fi
+
+if dirstack --version &>/dev/null ; then
+    alias push="dirstack push"
+    alias pop="dirstack pop"
+    alias ds="dirstack"
+    alias jump="dirstack jump"
+    alias jt="dirstack jump"
+fi
+
 #common stuff
-alias g="mvim"
 alias cd..='cd ..'
 
 #alias to reload aliases... meta...
 alias reload='source ~/.bash/aliases; source ~/.bash/ps1_setter.sh'
 alias reload-ps1='source ~/.bash/ps1_setter.sh'
 alias reload-aliases='source ~/.bash/aliases'
+alias edit-aliases="vim $HOME/.bash/aliases"
 
 #save me a character, please.
 alias vi=vim
-
-alias ls="gls --color=auto"
-
-alias edit-aliases="vim $HOME/.bash/aliases"
-
-#alias bundle-all="for i in \`ls $PWD\`; do cd \"$i\"; echo \"exec bundle in: $i\"; bundle install; cd ..; done;"
-
-
-
-alias push="dirstack push"
-alias pop="dirstack pop"
-alias ds="dirstack"
-alias jump="dirstack jump"
-alias jt="dirstack jump"
-
-
-alias sweep="rm ~/tmp/*.swp"
-
-alias tmux="/usr/local/bin/tmuxen"
-
-
 alias sl=ls
 
-alias clobber="say -v Zarvox 'boom goes the dynamite' && rake db:drop:all db:create:all db:migrate db:test:prepare"
-alias hammer="clobber"
-alias pewpew="git reset --hard HEAD && git clean -f && say -v princess 'pew pew pew'"
+#load PS1
+. $HOME/.bash/ps1_setter.sh
 
-
-alias ANNOYMODE="export ANNOY_MODE=1"
-alias SHUTUP="unset ANNOY_MODE"
