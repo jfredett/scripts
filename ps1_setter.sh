@@ -24,14 +24,19 @@ function ps1_setter() {
     echo $($ps1_provider ps1 2>/dev/null)
   }
 
+  current_time() {
+    echo "$(set_color LGTGRN $(date +%l:%M:%S))"
+  }
+
   function ps1 {
     local git=$(fetch_ps1 gitspy)
     local ruby=$(fetch_ps1 rvmspy)
     local stack="$(fetch_ps1 dirstack)"
     local clock_state="$(fetch_ps1 clock)"
     local current_dir="($(current_dir))"
+    local current_time="($(current_time))"
 
-    export PS1=$(squish_spaces "$current_dir $ruby $clock_state $git $stack \n∫∫∫ "; annoying_mode)
+    export PS1=$(squish_spaces "$current_time $current_dir $ruby $clock_state $git $stack \n∫∫∫ "; annoying_mode)
   }
 
   ps1
