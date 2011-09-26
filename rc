@@ -2,8 +2,8 @@
 source "$HOME/.rvm/scripts/rvm"
 stty -ixon
 
-. ~/.bash/loader
-. ~/.bash/aliases
-. ~/.bash/ps1_setter.sh
+source ~/.bash/loader
+source ~/.bash/aliases
+source ~/.bash/ps1_setter.sh
 
 
