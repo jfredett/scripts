@@ -1,5 +1,4 @@
 #!/bin/bash
-
 source "$HOME/.rvm/scripts/rvm"
 stty -ixon
 

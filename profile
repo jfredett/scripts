@@ -1,6 +1,6 @@
+#!/bin/bash
 . $HOME/.passwords
 . $HOME/.bashrc
-. $HOME/.bash/ps1_setter.sh
 . $HOME/.bash/git-completion.bash
 
 export PATH="/usr/local/Cellar/bash/*/bin/:$PATH"
