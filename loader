@@ -1,0 +1,20 @@
+# common functions
+. $HOME/.bash/functions.sh
+# global directory stack
+. $HOME/.bash/dirstack.sh
+# load rvmrc creator
+. $HOME/.bash/rvmrc.sh
+
+# load time tracking tools
+if [ "$OSX" ] ; then 
+  [ -s "$HOME/.bash/clock.sh" ] && source $HOME/.bash/clock.sh
+
+  # load coreutils
+  . /usr/local/Cellar/coreutils/8.12/aliases
+
+  if which tmux &>/dev/null ; then
+    # tmux completion
+    . /usr/local/etc/bash_completion.d/tmux
+    alias tmux="/usr/local/bin/tmuxen"
+  fi
+fi
