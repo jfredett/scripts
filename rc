@@ -1,0 +1,10 @@
+#!/bin/bash
+
+source "$HOME/.rvm/scripts/rvm"
+stty -ixon
+
+. ~/.bash/loader
+. ~/.bash/aliases
+. ~/.bash/ps1_setter.sh
+
+
