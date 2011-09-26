@@ -35,7 +35,7 @@ function dirstack() {
     echo "$PWD" >> "$DIRSTACK_DEFAULT_STACK"
     echo " << $PWD"
     #the call to readlink expands the local path into a full path if neccessary
-    cd $(readlink -f "$go_dir")
+    cd $(greadlink -f "$go_dir")
   }
 
   function pop_ds() {
@@ -87,7 +87,7 @@ function dirstack() {
   }
 
   function size_ds() {
-    local val=$(wc -l $DIRSTACK_DEFAULT_STACK)
+    local val=$(wc -l $DIRSTACK_DEFAULT_STACK | cut -c 8-)
     echo "${val% /*}"
   }
 
@@ -139,7 +139,6 @@ function dirstack() {
 
   function gen_ps1() {
     function top_of_stack() {
-      dirstack empty? &> /dev/null && return
       local peek=$(dirstack peek 2> /dev/null)
       echo -n "$(set_color "BLUE" "${peek#$(echo $peek | xargs dirname | xargs dirname)/}")"
     }
@@ -150,6 +149,8 @@ function dirstack() {
         echo ":$(set_color "YELLOW" "$size")"
       fi
     }
+
+    dirstack has_ps1 || return
 
     local stack="$(top_of_stack)$(stack_size)"
     [ $stack ] && stack="($stack)"
