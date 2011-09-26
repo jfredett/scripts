@@ -15,29 +15,28 @@ fi
 #load PS1
 . $HOME/.bash/ps1_setter.sh
 
-if which tmux &>/dev/null ; then
-    if [ "$OSX" ] ; then 
-        # tmux completion
-        . /usr/local/etc/bash_completion.d/tmux
-        alias tmux="/usr/local/bin/tmuxen"
-    fi
-fi
-
 if [ "$OSX" ] ; then
-    alias g="mvim"
-    alias ls="gls --color=auto"
-    alias clobber="say -v Zarvox 'boom goes the dynamite' && rake db:drop:all db:create:all db:migrate db:test:prepare"
-    alias hammer="clobber"
-    alias clobbah="clobber"
-    alias pewpew="git reset --hard HEAD && git clean -f && say -v princess 'pew pew pew'"
-    alias ANNOYMODE="export ANNOY_MODE=1"
-    alias SHUTUP="unset ANNOY_MODE"
-    alias sweep="rm ~/tmp/*.swp"
-    alias git=hub
+  alias g="mvim"
+  alias ls="gls --color=auto"
+  alias clobber="rake db:drop:all db:create:all db:migrate db:test:prepare && say -v Zarvox 'boom goes the dynamite'"
+  alias hammer="clobber"
+  alias clobbah="clobber"
+  alias pewpew="git reset --hard HEAD && git clean -f && say -v princess 'pew pew pew'"
+  alias ANNOYMODE="export ANNOY_MODE=1"
+  alias SHUTUP="unset ANNOY_MODE"
+  alias sweep="rm ~/tmp/*.swp"
+  alias git=hub
 
-    # load coreutils
-    . /usr/local/Cellar/coreutils/8.12/aliases
+  # load coreutils
+  . /usr/local/Cellar/coreutils/8.12/aliases
+
+  if which tmux &>/dev/null ; then
+    # tmux completion
+    . /usr/local/etc/bash_completion.d/tmux
+    alias tmux="/usr/local/bin/tmuxen"
+  fi
 fi
+
 
 if [ "$LINUX" ] ; then
     alias ls="ls --color=auto"
