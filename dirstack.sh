@@ -133,15 +133,15 @@ function dirstack() {
     [ -z $DIRSTACK_SWAP_FILE ]      && DIRSTACK_SWAP_FILE="$HOME/.dirstack_tmp"
   }
 
+  function has_ps1() {
+    dirstack nonempty? &> /dev/null 
+  }
+
   function gen_ps1() {
     function top_of_stack() {
-      dirstack empty? &> /dev/null
-      if [ "$?" != "0" ] ; then
-        local peek=$(dirstack peek 2> /dev/null)
-        local val=$(set_color "BLUE" "${peek#$(echo $peek | xargs dirname | xargs dirname)/}")
-        val="$val"
-      fi
-      echo -n $val
+      dirstack empty? &> /dev/null && return
+      local peek=$(dirstack peek 2> /dev/null)
+      echo -n "$(set_color "BLUE" "${peek#$(echo $peek | xargs dirname | xargs dirname)/}")"
     }
 
     function stack_size() {
@@ -191,6 +191,7 @@ HELP
      size)      size_ds                 ;;
      jump)      jump                    ;;
      ps1)       gen_ps1                 ;;
+     has_ps1)   has_ps1                 ;;
 
      #private -- anything in here represents an unsupported function
      # if you want to use it, and later I break it, it's not my problem.
