@@ -10,6 +10,10 @@ function rvmspy() {
   function current_gemset() {
     echo -n "${GEM_HOME#*@}"
   }
+  
+  function has_ps1() {
+    true
+  }
 
   function gen_ps1() {
     local val=$(current_ruby) ; local color="YELLOW"
