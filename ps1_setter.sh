@@ -21,7 +21,9 @@ function ps1_setter() {
 
   fetch_ps1() {
     local ps1_provider="$1"
-    echo $($ps1_provider ps1 2>/dev/null)
+    if $ps1_provider has_ps1 &>/dev/null ; then 
+      echo $($ps1_provider ps1 2>/dev/null)
+    fi
   }
 
   current_time() {
