@@ -1,3 +1,5 @@
+#!/bin/bash
+
 if [ "$OSX" ] ; then
   alias g="mvim"
   alias ls="gls --color=auto"
@@ -28,9 +30,12 @@ fi
 alias cd..='cd ..'
 
 #alias to reload aliases... meta...
-alias reload='source ~/.bash/aliases; source ~/.bash/ps1_setter.sh'
-alias reload-ps1='source ~/.bash/ps1_setter.sh'
-alias reload-aliases='source ~/.bash/aliases'
+if [ "$OSX" ] ; then
+  alias reload='source ~/.profile'
+elif [ "$LINUX" ] ; then
+  alias reload='source ~/.bash_profile'
+fi
+
 alias edit-aliases="vim $HOME/.bash/aliases"
 
 #save me a character, please.
