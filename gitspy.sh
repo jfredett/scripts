@@ -58,19 +58,23 @@ function gitspy() {
     done
   }
 
+  function has_ps1() {
+    gitspy present? 
+  }
+
   function gen_ps1() {
     function set_default() {
       echo -n "${1:-$(set_color "RED" "$2")}"
     }
 
-    if gitspy present? ; then
-      local curr_branch=$(set_default "$(gitspy current branch)" "none")
-      local curr_commit=$(set_default "$(gitspy current commit)" "headless")
-      local curr_committer=$(set_default "$(gitspy current committer)" "unknown")
-      local curr_status="$(gitspy status)"
+    gitspy absent? && return 
 
-      echo -n "($curr_branch:$curr_commit:$curr_committer) $curr_status"
-    fi
+    local curr_branch=$(set_default "$(gitspy current branch)" "none")
+    local curr_commit=$(set_default "$(gitspy current commit)" "headless")
+    local curr_committer=$(set_default "$(gitspy current committer)" "unknown")
+    local curr_status="$(gitspy status)"
+
+    echo -n "($curr_branch:$curr_commit:$curr_committer) $curr_status"
   }
 
   function is_git_dir() {
@@ -129,8 +133,9 @@ Help
     present?) is_git_dir                                            ;;
     absent?) not_git_dir                                            ;;
     reload) source ~/.bash/gitspy.sh                                ;;
-    ps1) gen_ps1                                             ;;
-    help|*) show_help                                        ;;
+    ps1) gen_ps1                                                    ;;
+    has_ps1) has_ps1                                                ;;
+    help|*) show_help                                               ;;
   esac
 
 }
