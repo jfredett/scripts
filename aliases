@@ -40,3 +40,5 @@ alias edit-aliases="vim $HOME/.bash/aliases"
 
 #save me a character, please.
 alias vi=vim
+
+alias psf="ps aux | grep"
