@@ -87,8 +87,7 @@ function dirstack() {
   }
 
   function size_ds() {
-    local val=$(wc -l $DIRSTACK_DEFAULT_STACK | cut -c 8-)
-    echo "${val% /*}"
+    wc -l $DIRSTACK_DEFAULT_STACK | sed -n 's/^ *\([0-9]*\).*$/\1/p'
   }
 
   function not_empty() {
