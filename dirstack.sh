@@ -35,7 +35,7 @@ function dirstack() {
     echo "$PWD" >> "$DIRSTACK_DEFAULT_STACK"
     echo " << $PWD"
     #the call to readlink expands the local path into a full path if neccessary
-    cd $(greadlink -f "$go_dir")
+    cd $(readlink -f "$go_dir")
   }
 
   function pop_ds() {

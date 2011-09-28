@@ -1,3 +1,10 @@
+#this needs to be first, since the internal scripts use the GNU 
+#utils, which require these aliases to be in place.
+if [ "$OSX" ] ; then 
+  # load coreutils
+  . /usr/local/Cellar/coreutils/8.12/aliases
+fi
+
 # common functions
 . $HOME/.bash/functions.sh
 # global directory stack
@@ -7,10 +14,8 @@
 
 # load time tracking tools
 if [ "$OSX" ] ; then 
-  [ -s "$HOME/.bash/clock.sh" ] && source $HOME/.bash/clock.sh
 
-  # load coreutils
-  . /usr/local/Cellar/coreutils/8.12/aliases
+  [ -s "$HOME/.bash/clock.sh" ] && source $HOME/.bash/clock.sh
 
   if which tmux &>/dev/null ; then
     # tmux completion
