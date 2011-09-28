@@ -13,6 +13,7 @@ function rvmrc {
     fi
     
     echo "rvm use $ruby@$dirname --create --verbose" > .rvmrc
+    source .rvmrc
   }
 
   #private
