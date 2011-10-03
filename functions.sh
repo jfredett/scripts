@@ -38,3 +38,7 @@ function set_color() {
 function squish_spaces() {
   echo "$(echo "$1" | sed -nE 's/\ +/ /pg')"
 }
+
+function fup() {
+  [ "$1" = "dup" ] && cp "$2" "$3" && return 0;
+}
