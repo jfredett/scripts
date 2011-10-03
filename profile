@@ -1,6 +1,12 @@
 #!/bin/bash
 
-export OSX="0"
+if [ `uname` = 'Darwin' ] ; then
+  export OSX="0"
+  unset LINUX
+elif [ `uname` = 'Linux' ] ; then
+  export LINUX="0"
+  unset OSX
+fi
 
 export PATH="/usr/local/Cellar/bash/*/bin/:$PATH"
 export PATH="$HOME/.bash/:$PATH"
