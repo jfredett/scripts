@@ -1,0 +1,48 @@
+#!/bin/bash
+
+# create and install a ssh key on paulie for the sparky user, for use w/ sparkleshare
+
+function sparky {
+  local cmd="umask 077; test -d .ssh || mkdir .ssh ; cat >> .ssh/authorized_keys"
+  local key="$HOME/.ssh/$USER-sparky"
+  local CONF_PATH="$HOME/.config/sparkleshare"
+  read -p "Enter your (full) name: " name
+  read -p "Enter your email: " email
+
+  write_config() {
+    cat <<XML > "$CONF_PATH/config.xml"
+    <?xml version="1.0" encoding="UTF-8"?>
+    <sparkleshare>
+      <user>
+        <name>$name</name>
+        <email>$email</email>
+      </user>
+      <notifications>True</notifications>
+      <folder>
+        <name>sparky</name>
+        <url>ssh://sparky@paulie.vermonster.com/home/sparky</url>
+        <backend>Git</backend>
+      </folder>
+    </sparkleshare>
+XML
+  }
+
+  echo "Building config directory"
+  mkdir -p "$CONF_PATH" || { echo "Could not create config directory, quitting" ; return 4 ; }
+
+  if [ "$(cat "$CONF_PATH/config.xml" &>/dev/null)" ] ; then
+    echo "config.xml is not empty, please back it up, re-run, and manually merge"
+    return 8
+  else
+    write_config
+  fi
+
+  echo "Generating keyfile for sparky"
+  ssh-keygen -f "$key" -N '' -q || return 1
+
+  echo "Uploading key to Paulie"
+  cat "$key" | ssh "sparky@paulie.vermonster.com" "$cmd" || return 2
+
+  return 0
+}
+sparky
