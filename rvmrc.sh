@@ -13,7 +13,7 @@ function rvmrc {
     fi
     
     echo "RVM_STRING=\"rvm use $ruby@$dirname --create --verbose\"" > .rvmrc
-    echo "[ -e './.rvmrc_local' ] && source './.rvmrc_local' || $RVM_STRING" >> .rvmrc
+    echo "[ -e './.rvmrc_local' ] && source './.rvmrc_local' || \$RVM_STRING" >> .rvmrc
   }
 
   #private
