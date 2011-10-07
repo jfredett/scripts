@@ -12,6 +12,8 @@ export PATH="/usr/local/Cellar/bash/*/bin/:$PATH"
 export PATH="$HOME/.bash/:$PATH"
 export PATH="/usr/local/bin:$PATH"
 
+export VIM_PATH="$HOME/.vim-new"
+
 export LS_COLORS='di=01;36'
 export EDITOR='vim'
 
