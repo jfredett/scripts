@@ -11,6 +11,11 @@ if [ "$OSX" ] ; then
   alias SHUTUP="unset ANNOY_MODE"
   alias sweep="rm ~/tmp/*.swp"
   alias git=hub
+  alias find="gfind"
+  alias locate="glocate"
+  alias oldfind="goldfind"
+  alias updatedb="gupdatedb"
+  alias xargs="gxargs"
 fi
 
 
