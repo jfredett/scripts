@@ -42,3 +42,7 @@ function squish_spaces() {
 function fup() {
   [ "$1" = "dup" ] && cp "$2" "$3" && return 0;
 }
+
+function line-count {
+  find "${1:=.}" -name "${2:=*.rb}" -exec cat {} \; | grep -vE '^\s*#' | grep -vE '^\s*$' | wc -l
+}
