@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# stashes your changes, runs the tests on a clean WD, then re-applies your
+# changes.
+
+git stash 
+if [ "$1" ] ; then
+  $@
+elif rake -V &>/dev/null ; then
+  echo "No test command given, but found rake, running default rake command"
+  rake
+else
+  echo "No test command given"
+fi
+git stash pop
+
+
