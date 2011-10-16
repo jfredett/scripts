@@ -45,7 +45,6 @@ alias edit-aliases="vim $HOME/.bash/aliases && reload"
 
 alias gru='git remote update -p'
 alias grom='git rebase origin/master'
-alias go='git remote update -p && git rebase origin/master && say -v princess "YAY"'
 
 #save me a character, please.
 alias vi=vim

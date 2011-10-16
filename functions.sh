@@ -46,3 +46,22 @@ function fup() {
 function line-count {
   find "${1:=.}" -name "${2:=*.rb}" -exec cat {} \; | grep -vE '^\s*#' | grep -vE '^\s*$' | wc -l
 }
+
+function go {
+  git remote update -p 
+  git rebase origin/master
+  
+  if bundle -v &>/dev/null ; then
+    echo 'detected bundler, running `bundle install`'
+    bundle
+  fi
+
+  if rake -V &>/dev/null ; then
+    echo 'detected rake, running default task'
+    if rake ; then
+      echo "Tests passed!"
+    else
+      echo "Oh Noes! FAIL"
+    fi
+  fi
+}
