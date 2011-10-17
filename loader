@@ -6,7 +6,7 @@ if [ "$OSX" ] ; then
 fi
 
 # common functions
-. $HOME/.bash/functions.sh
+. $HOME/.bash/functions
 # global directory stack
 . $HOME/.bash/dirstack.sh
 # load rvmrc creator
