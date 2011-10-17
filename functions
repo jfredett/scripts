@@ -65,3 +65,7 @@ function go {
     fi
   fi
 }
+
+function do-after {
+  sleep `echo "$1" | bc` && $2
+}
