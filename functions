@@ -77,3 +77,8 @@ function y {
 function n {
   [ $? = 0 ] || $@ 
 }
+
+function maildir {
+  local name="$1"
+  mkdir -p $1/{cur,new,tmp}
+}

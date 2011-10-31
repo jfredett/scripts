@@ -52,3 +52,4 @@ alias vi=vim
 
 alias psf="ps aux | grep"
 
+alias mdr=maildir
