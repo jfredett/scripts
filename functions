@@ -69,3 +69,11 @@ function go {
 function do-after {
   sleep `echo "$1" | bc` && $2
 }
+
+function y {
+  [ $? = 0 ] && $@
+}
+
+function n {
+  [ $? = 0 ] || $@ 
+}
