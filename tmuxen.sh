@@ -16,7 +16,7 @@
 #                                      <script> if provided.
 #   connect <session>                | Connects to <session> desynchronously if it exists.
 #   kill <session>                   | kills <session> and all attached subsessions.
-#   garbase [<session>]              | kills all unattached sessions (or subsessions of <session>,
+#   garbage [<session>]              | kills all unattached sessions (or subsessions of <session>,
 #                                      if given), but not the root session.
 #   prune <session>                  | kills all subsessions of the given session, even if
 #                                      the subsession is still attached
