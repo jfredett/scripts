@@ -84,6 +84,7 @@ function maildir {
 }
 
 function cl {
-  tmux clear-history
   /usr/bin/clear
+  tmux clear-history
+  tmux clear-history
 }
