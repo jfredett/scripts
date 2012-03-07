@@ -17,6 +17,8 @@ if [ "$OSX" ] ; then
   alias oldfind="goldfind"
   alias updatedb="gupdatedb"
   alias xargs="gxargs"
+  alias clb='cl ; bundle '
+  alias clr='clb exec rake'
 fi
 
 
