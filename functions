@@ -89,6 +89,10 @@ function cl {
   tmux clear-history
 }
 
+function puppet-mod {
+  mkdir -p "$1/{files,manifests,lib,tests,templates}"
+}
+
 function push-with-keyswap {
   git push origin master
   ssh-add -D
