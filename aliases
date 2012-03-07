@@ -56,3 +56,4 @@ alias vi=vim
 alias psf="ps aux | grep"
 
 alias mdr=maildir
+alias pictures="railroady -b -M > doc/models.dot ; dot -Tsvg doc/models.dot > doc/models.svg ; open doc/models.svg"
