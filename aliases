@@ -4,6 +4,7 @@ if [ "$OSX" ] ; then
   alias g="mvim"
   alias ls="gls --color=auto"
   alias clobber="rake db:drop:all db:create:all db:migrate db:test:prepare && say -v Zarvox 'boom goes the dynamite'"
+  alias gitx='gitx --all'
   alias hammer="clobber"
   alias clobbah="clobber"
   alias pewpew="git reset --hard HEAD && git clean -f && say -v princess 'pew pew pew'"
