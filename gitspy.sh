@@ -20,6 +20,18 @@ function gitspy() {
     echo -n $val
   }
 
+  function each_repo_do { 
+    local curr_dir="$PWD"
+    shift #burns the 'each-repo-do' from the argstack
+    for repo in `ls` ; do 
+      cd $repo
+      if gitspy present? ; then
+        $@
+      fi
+      cd $curr_dir
+    done
+  }
+
   function last_commit_was_merge_commit() {
     gitspy current log | grep Merge: &>/dev/null
   }
@@ -133,6 +145,7 @@ Help
     present?) is_git_dir                                            ;;
     absent?) not_git_dir                                            ;;
     reload) source ~/.bash/gitspy.sh                                ;;
+    each-repo-do) each_repo_do $@                                   ;;
     ps1) gen_ps1                                                    ;;
     has_ps1) has_ps1                                                ;;
     help|*) show_help                                               ;;
