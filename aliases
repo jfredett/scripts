@@ -61,3 +61,5 @@ alias pictures="railroady -b -M > doc/models.dot ; dot -Tsvg doc/models.dot > do
 alias wip='git add . ; git ci -a -m "wip"'
 alias unwip='git reset HEAD^'
 alias reset!='git reset --hard HEAD'
+
+alias heroku_keyswap="ssh-add -D ; ssh-add ~/.ssh/heroku"

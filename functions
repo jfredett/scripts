@@ -88,3 +88,10 @@ function cl {
   tmux clear-history
   tmux clear-history
 }
+
+function push-with-keyswap {
+  git push origin master
+  ssh-add -D
+  ssh-add ~/.ssh/heroku
+  git push heroku master
+}
