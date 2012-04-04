@@ -65,3 +65,7 @@ alias unwip='git reset HEAD^'
 alias reset!='git reset --hard HEAD'
 
 alias heroku_keyswap="ssh-add -D ; ssh-add ~/.ssh/heroku"
+
+alias exterminate="sudo kill -9"
+
+
