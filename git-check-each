@@ -1,0 +1,12 @@
+#!/bin/bash
+
+for sha in `git rev-list --all --date-order` ; do
+  git checkout $sha &> /dev/null
+  if [ ! `rake &> /dev/null` ] ; then
+    echo "Failed at commit: $sha" > "failures"
+  fi
+done
+clear
+cat failures
+rm failures
+git checkout master
