@@ -36,6 +36,8 @@ function dirstack() {
     echo " << $PWD"
     #the call to readlink expands the local path into a full path if neccessary
     cd $(readlink -f "$go_dir")
+    #ensures any post-cd hooks are run.
+    cd . 
   }
 
   function pop_ds() {
@@ -44,6 +46,8 @@ function dirstack() {
     local popdir=$(dirstack peek)
     cd "$popdir" && dirstack burn 2> /dev/null
     echo " $popdir >>"
+    #ensures any post-cd hooks are run.
+    cd . 
   }
 
   function burn() {
@@ -56,8 +60,9 @@ function dirstack() {
 
   function jump() {
     dirstack empty? && return 1
-    dirstack dup
-    dirstack pop
+    dirstack dup &>/dev/null
+    dirstack pop &>/dev/null
+    cd .
   }
 
   function peek() {
