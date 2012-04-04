@@ -19,6 +19,7 @@ if [ "$OSX" ] ; then
   alias xargs="gxargs"
   alias clb='cl ; bundle '
   alias clr='clb exec rake'
+  alias clc='clb exec pry'
 fi
 
 
