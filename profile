@@ -26,3 +26,6 @@ source "$HOME/.passwords"
 source "$HOME/.bash/git-completion.bash"
 source "$HOME/.bash/rc"
 
+### Added by surfraw. To remove use surfraw-update-path -remove
+	export PATH=$PATH:/usr/local/Cellar/surfraw/2.2.8/lib/surfraw
+### End surfraw addition.
