@@ -12,6 +12,7 @@ export PATH="/usr/local/Cellar/bash/*/bin/:$PATH"
 export PATH="$HOME/.bash/:$PATH"
 export PATH="/usr/local/bin:$PATH"
 export PATH="/Users/jfredett/.cabal/bin/:$PATH"
+export PATH="/usr/local/lib/node_modules/:$PATH"
 
 export VIM_PATH="$HOME/.vim"
 
