@@ -38,7 +38,8 @@ function ps1_setter() {
     local current_dir="($(current_dir))"
     local current_time="($(current_time))"
 
-    export PS1=$(squish_spaces "$current_time $current_dir $ruby $clock_state $git $stack \n∫∫∫ "; annoying_mode)
+    local fob="∑∑∑" #"∫∫∫" 
+    export PS1=$(squish_spaces "$current_time $current_dir $ruby $clock_state $git $stack \n$fob "; annoying_mode)
   }
 
   ps1
