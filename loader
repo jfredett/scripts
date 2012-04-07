@@ -23,3 +23,7 @@ if [ "$OSX" ] ; then
     alias tmux="/usr/local/bin/tmuxen"
   fi
 fi
+
+. $HOME/.bash/aliases
+
+. $HOME/.bash/ps1_setter.sh
