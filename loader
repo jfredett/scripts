@@ -5,6 +5,10 @@ if [ "$OSX" ] ; then
   . /usr/local/Cellar/coreutils/8.12/aliases
 fi
 
+if git --version &> /dev/null ; then
+  source "$HOME/.bash/git-scripts/git-completion.bash"
+fi
+
 # common functions
 . $HOME/.bash/functions
 # global directory stack
