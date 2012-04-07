@@ -5,10 +5,6 @@
 # rvm contrib
 #
 function ps1_setter() {
-  source ~/.bash/gitspy.sh
-  source ~/.bash/rvmspy.sh
-  source ~/.bash/functions
-
   current_dir() {
     echo -n "${PWD#$(echo "$PWD" | xargs dirname | xargs dirname)/}"
   }

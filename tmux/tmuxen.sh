@@ -28,7 +28,6 @@
 
 function tmuxen {
   source "$HOME/.bash/tmux/tmuxen-find.sh"
-  source "usage.sh"
 
   killsessions() {
     for session in $(eval "$1") ; do

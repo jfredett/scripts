@@ -11,29 +11,29 @@ if [ "$OSX" ] ; then
   alias ANNOYMODE="export ANNOY_MODE=1"
   alias SHUTUP="unset ANNOY_MODE"
   alias sweep="rm ~/tmp/*.swp"
-  alias git=hub
+
   alias find="gfind"
   alias locate="glocate"
-  alias oldfind="goldfind"
   alias updatedb="gupdatedb"
+  alias oldfind="goldfind"
   alias xargs="gxargs"
+
   alias clb='cl ; bundle '
   alias clr='clb exec rake'
   alias clc='clb exec pry'
 fi
 
-
 if [ "$LINUX" ] ; then
-    alias ls="ls --color=auto"
+  alias ls="ls --color=auto"
 fi
 
 if dirstack --version &>/dev/null ; then
-    alias push="dirstack push"
-    alias pop="dirstack pop"
-    alias ds="dirstack"
-    alias jump="dirstack jump"
-    alias jt="dirstack jump"
-    alias switch='dirstack jump && dirstack swap'
+  alias push="dirstack push"
+  alias pop="dirstack pop"
+  alias ds="dirstack"
+  alias jump="dirstack jump"
+  alias jt="dirstack jump"
+  alias switch='dirstack jump && dirstack swap'
 fi
 
 #common stuff
