@@ -27,7 +27,7 @@
 
 
 function tmuxen {
-  source "tmuxen-find.sh"
+  source "$HOME/.bash/tmux/tmuxen-find.sh"
   source "usage.sh"
 
   killsessions() {
