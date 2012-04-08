@@ -1,0 +1,27 @@
+#!/bin/bash
+
+################################################################################
+function prepend_to_path { [[ ! $PATH =~ $1 ]] && export PATH="$1:$PATH" ; }
+function append_to_path { [[ ! $PATH =~ $1 ]] && export PATH="$PATH:$1" ; }
+
+  __PATH_TEMP=$PATH ; export PATH=
+  prepend_to_path "/usr/local/bin"
+  prepend_to_path "$HOME/.bash/"
+  prepend_to_path "$HOME/.cabal/bin/"
+  prepend_to_path "/usr/local/lib/node_modules/"
+  prepend_to_path "/usr/local/Cellar/surfraw/2.2.8/lib/surfraw"
+  append_to_path $__PATH_TEMP
+
+unset append_to_path
+unset prepend_to_path
+################################################################################
+
+export VIM_PATH="$HOME/.vim"
+
+export LS_COLORS='di=01;36'
+export EDITOR='vim'
+
+export HISTSIZE=99999
+export HISTFILESIZE=99999
+
+export SHELL=/usr/local/bin/bash
