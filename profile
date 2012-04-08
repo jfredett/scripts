@@ -1,4 +1,5 @@
 #!/bin/bash
+stty -ixon
 
 if [ `uname` = 'Darwin' ] ; then
   export OSX="0"
@@ -13,6 +14,9 @@ export PATH="$HOME/.bash/:$PATH"
 export PATH="/usr/local/bin:$PATH"
 export PATH="/Users/jfredett/.cabal/bin/:$PATH"
 export PATH="/usr/local/lib/node_modules/:$PATH"
+### Added by surfraw. To remove use surfraw-update-path -remove
+export PATH=$PATH:/usr/local/Cellar/surfraw/2.2.8/lib/surfraw
+### End surfraw addition.
 
 export VIM_PATH="$HOME/.vim"
 
@@ -24,8 +28,6 @@ export HISTFILESIZE=99999
 
 source "$HOME/.bash/rc"
 
-### Added by surfraw. To remove use surfraw-update-path -remove
-	export PATH=$PATH:/usr/local/Cellar/surfraw/2.2.8/lib/surfraw
-### End surfraw addition.
+source "$HOME/.rvm/scripts/rvm"
 
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm" # Load RVM function
+source ~/.bash/loader

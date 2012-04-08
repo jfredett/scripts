@@ -1,7 +1,3 @@
 #!/bin/bash
-source "$HOME/.rvm/scripts/rvm"
-stty -ixon
-
-source ~/.bash/loader
-
+# everything is in profile.
 
