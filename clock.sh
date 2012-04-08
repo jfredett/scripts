@@ -1,1 +1,0 @@
-/Users/jfredett/code/mine/clock/clock.sh
