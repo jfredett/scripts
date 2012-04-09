@@ -6,9 +6,9 @@ function append_to_path { [[ ! $PATH =~ $1 ]] && export PATH="$PATH:$1" ; }
 
   __PATH_TEMP=$PATH ; export PATH=
   prepend_to_path "/usr/local/bin"
-  prepend_to_path "$HOME/.bash/"
-  prepend_to_path "$HOME/.cabal/bin/"
-  prepend_to_path "/usr/local/lib/node_modules/"
+  prepend_to_path "$HOME/.bash"
+  prepend_to_path "$HOME/.cabal/bin"
+  prepend_to_path "/usr/local/lib/node_modules"
   prepend_to_path "/usr/local/Cellar/surfraw/2.2.8/lib/surfraw"
   append_to_path $__PATH_TEMP
 
