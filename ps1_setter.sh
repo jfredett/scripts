@@ -9,12 +9,6 @@ function ps1_setter() {
     echo -n "${PWD#$(echo "$PWD" | xargs dirname | xargs dirname)/}"
   }
 
-  annoying_mode() {
-    if [ "$ANNOY_MODE" = "1" ] ; then
-      say -v cellos "$(history | tail -n1 | cut -c 8-)" &>/dev/null &
-    fi
-  }
-
   fetch_ps1() {
     local ps1_provider="$1"
     if $ps1_provider has_ps1 &>/dev/null ; then 
@@ -35,7 +29,7 @@ function ps1_setter() {
     local current_time="($(current_time))"
 
     local fob="∑∑∑" #"∫∫∫" 
-    export PS1=$(squish_spaces "$current_time $current_dir $ruby $clock_state $git $stack \n$fob "; annoying_mode)
+    export PS1=$(squish_spaces "$current_time $current_dir $ruby $clock_state $git $stack \n$fob ")
   }
 
   ps1
