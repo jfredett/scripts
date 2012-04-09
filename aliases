@@ -68,4 +68,5 @@ alias heroku_keyswap="ssh-add -D ; ssh-add ~/.ssh/heroku"
 
 alias exterminate="sudo kill -9"
 
-
+alias check_mail='cat /var/mail/jfredett'
+alias clear_mail='echo > /var/mail/jfredett'
