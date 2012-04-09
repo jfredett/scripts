@@ -17,7 +17,7 @@ fi
 . $HOME/.bash/ps1_setter.sh
 
 if git --version &> /dev/null ; then
-  source "$HOME/.bash/git-scripts/git-completion.bash"
+  source "$HOME/.bash/git-scripts/.load.sh"
 fi
 
 if which tmux &>/dev/null ; then
