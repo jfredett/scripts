@@ -207,6 +207,12 @@ HELP
      #catch-all
      *)         dirstack_help           ;;
   esac
+
+  unset push_ds; unset pop_ds; unset burn; unset jump; unset peek; unset show;
+  unset do_show; unset is_empty; unset empty_stack_message; unset size_ds;
+  unset not_empty; unset force; unset swap; unset dup; unset clear_stack;
+  unset reload_dirstack; unset check_environment; unset has_ps1; unset gen_ps1;
+  unset top_of_stack; unset stack_size; unset dirstack_help; 
 }
 
 
