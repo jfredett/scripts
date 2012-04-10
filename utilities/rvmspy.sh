@@ -48,4 +48,7 @@ HELP
     ps1) gen_ps1                      ;;
     *) show_help                      ;;
   esac
+
+  unset current_ruby; unset current_gemset; unset has_ps1; unset gen_ps1; 
+  unset show_help
 }
