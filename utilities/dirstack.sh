@@ -25,6 +25,7 @@
 # that will be push and pop.
 
 function dirstack() (
+  source "$HOME/.bash/utilities/core.sh"
   DIRSTACK_STACKFILE="$HOME/.dirstack"
 
   function --version { echo "v0.0.2"; }
@@ -56,17 +57,19 @@ Prefixed:
 HELP
   }
   
-  function stack_too_small_check { [ $(size) -lt 2 ] && echo "Stack size too small" && exit 2 ;}
-  function empty? { [ -z "$(cat $DIRSTACK_STACKFILE)" ] && return $? ; }
-  function empty_stack_check { empty? && echo '>>Empty Stack<<' && exit 1; }
+  function empty?    { [ $(size) = 0 ] ; }
+  function nonempty? { ! empty? ; }
 
-  function size { local foo="$(wc -l $DIRSTACK_STACKFILE)" ; echo ${foo%% *} ; }
+  function stack_too_small_check { [ $(size) -lt 2 ] && echo "Stack size too small" && exit 2 ;}
+  function empty_stack_check     { empty? && echo '>>Empty Stack<<' && exit 1; }
+
   function clear { rm $DIRSTACK_STACKFILE ; touch $DIRSTACK_STACKFILE ; }
 
-  function has-ps1 { empty_stack_check; }
-  function ps1 { echo "($(peek):$(size))"; }
+  function has_ps1 { nonempty?; }
+  function ps1     { echo "($(color BLUE $(peek)):$(color YELLOW $(size)))"; }
 
-  function pop { empty_stack_check ; jump && burn ; }
+  function size { local foo="$(wc -l $DIRSTACK_STACKFILE)" ; echo ${foo%% *} ; }
+  function pop  { empty_stack_check ; jump && burn ; }
   function peek { empty_stack_check ; tail -n1 "$DIRSTACK_STACKFILE" ; return 0 ; }
   function burn { empty_stack_check ; sed '$d' $DIRSTACK_STACKFILE | tee $DIRSTACK_STACKFILE ; }
   function jump { empty_stack_check ; echo "$(peek)" ; }
