@@ -27,6 +27,8 @@
 function dirstack() (
   DIRSTACK_STACKFILE="$HOME/.dirstack"
 
+  function --version { echo "v0.0.2"; }
+
   function --help {
     cat<< HELP
 usage: dirstack <command> [options]
@@ -54,10 +56,20 @@ Prefixed:
 HELP
   }
   
-  #fragments#
-  EMPTY_STACK_CHECK="empty? && echo '>>Empty Stack<<' && return 1"
-  STACK_TOO_SMALL_CHECK='[ $(size) -lt 2 ] && echo "Stack size too small" && return 2'
-  ###########
+  function stack_too_small_check { [ $(size) -lt 2 ] && echo "Stack size too small" && exit 2 ;}
+  function empty? { [ -z "$(cat $DIRSTACK_STACKFILE)" ] && return $? ; }
+  function empty_stack_check { empty? && echo '>>Empty Stack<<' && exit 1; }
+
+  function size { local foo="$(wc -l $DIRSTACK_STACKFILE)" ; echo ${foo%% *} ; }
+  function clear { rm $DIRSTACK_STACKFILE ; touch $DIRSTACK_STACKFILE ; }
+
+  function has-ps1 { empty_stack_check; }
+  function ps1 { echo "($(peek):$(size))"; }
+
+  function pop { empty_stack_check ; jump && burn ; }
+  function peek { empty_stack_check ; tail -n1 "$DIRSTACK_STACKFILE" ; return 0 ; }
+  function burn { empty_stack_check ; sed '$d' $DIRSTACK_STACKFILE | tee $DIRSTACK_STACKFILE ; }
+  function jump { empty_stack_check ; echo "$(peek)" ; }
 
   function push {
     local dir="${1:-`pwd`}"
@@ -65,44 +77,19 @@ HELP
     echo "$dir" >> $DIRSTACK_STACKFILE
   }
 
-  function empty? { [ -z "$(cat $DIRSTACK_STACKFILE)" ] && return $? ; }
-
-  function pop { eval $EMPTY_STACK_CHECK ; jump && burn ; }
-
   function show {
     echo "-------- DIRECTORY STACK --------" 
     cat $DIRSTACK_STACKFILE
     echo "---------------------------------" 
   }
 
-  function peek { eval $EMPTY_STACK_CHECK ; tail -n1 "$DIRSTACK_STACKFILE" ; return 0 ; }
-
-  function burn {
-    eval $EMPTY_STACK_CHECK
-    sed '$d' $DIRSTACK_STACKFILE | tee $DIRSTACK_STACKFILE
-  } 
-
-  function size { local foo="$(wc -l $DIRSTACK_STACKFILE)" ; echo ${foo%% *} ; }
-  function clear { rm $DIRSTACK_STACKFILE ; touch $DIRSTACK_STACKFILE ; }
-
-  function has-ps1 { true; }
-  function ps1 { echo "($(peek):$(size))"; }
-
-  function jump {
-    eval $EMPTY_STACK_CHECK
-    echo "$(peek)"
-  }
-
   function swap {
-    eval $STACK_TOO_SMALL_CHECK
+    stack_too_small_check
 
     local top="$(peek)" ; burn
     local sub="$(peek)" ; burn
     push $top           ; push $sub
   } 
-
-
-  function --version { echo "v0.0.2"; }
   
   $@
 )
