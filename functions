@@ -116,3 +116,10 @@ function ignore {
 
   return 0
 }
+
+
+function fr {
+  foreman run "$1" -e "${2:-.env}"
+}
+
+
