@@ -19,10 +19,10 @@ function rvmrc {
   #private
 
   __check_env() {
-    [ ! rvm --version &>/dev/null ] && echo "rvm not installed, quitting" && return 1
+    [ ! rvm --version &>/dev/null ]      && echo "rvm not installed, quitting"   && return 1
     [ -z "$(rvm list strings | wc -l)" ] && echo "no rubies installed, quitting" && return 2
     return 0
-  }
+  } >&2
 
   #dispatch
 
@@ -31,4 +31,6 @@ function rvmrc {
   else
     return $?
   fi
+
+  unset create; unset __check_env;
 }
