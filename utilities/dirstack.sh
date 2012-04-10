@@ -23,200 +23,94 @@
 # a git-style interface to do these actions. So you do `dirstack push` instead of
 # pushd. The intention is that you alias these things to whatever you like. For me,
 # that will be push and pop.
-function dirstack() {
 
-  function push_ds() {
-    #go_dir is the directory to go to. so "dirstack push . .."
-    #would push the CWD and go to the parent
-    local go_dir=$1; shift;
+function dirstack() (
+  DIRSTACK_STACKFILE="$HOME/.dirstack"
 
-    [ -z $go_dir ] && go_dir="$DIRSTACK_DEFAULT"
-
-    echo "$PWD" >> "$DIRSTACK_DEFAULT_STACK"
-    echo " << $PWD"
-    #the call to readlink expands the local path into a full path if neccessary
-    cd $(readlink -f "$go_dir")
-    #ensures any post-cd hooks are run.
-    cd . 
-  }
-
-  function pop_ds() {
-    dirstack empty? && return 1
-
-    local popdir=$(dirstack peek)
-    cd "$popdir" && dirstack burn 2> /dev/null
-    echo " $popdir >>"
-    #ensures any post-cd hooks are run.
-    cd . 
-  }
-
-  function burn() {
-    dirstack empty? 2> /dev/null && return 1
-
-    head -n-1 $DIRSTACK_DEFAULT_STACK > $DIRSTACK_SWAP_FILE
-    cat $DIRSTACK_SWAP_FILE > $DIRSTACK_DEFAULT_STACK
-    rm $DIRSTACK_SWAP_FILE
-  }
-
-  function jump() {
-    dirstack empty? && return 1
-    dirstack dup &>/dev/null
-    dirstack pop &>/dev/null
-    cd .
-  }
-
-  function peek() {
-    dirstack nonempty?  && tail -n1 "$DIRSTACK_DEFAULT_STACK" && return 0
-    empty_stack_message && return 1
-  }
-
-  function show() {
-    dirstack nonempty?  && do_show && return 0
-    empty_stack_message && return 1
-  }
-
-  function do_show() {
-    echo "-------- DIRECTORY STACK --------"
-    cat $DIRSTACK_DEFAULT_STACK
-    echo "---------------------------------"
-  }
-
-  function is_empty() {
-    dirstack nonempty?  && return 1
-    empty_stack_message && return 0
-  }
-
-  function empty_stack_message() {
-    echo " >> Empty Stack <<"
-    return 0
-  }
-
-  function size_ds() {
-    wc -l $DIRSTACK_DEFAULT_STACK | sed -n 's/^ *\([0-9]*\).*$/\1/p'
-  }
-
-  function not_empty() {
-    #this is a little cheat-y, and could probably suck less.
-    [ -e "$DIRSTACK_DEFAULT_STACK" -a -n "$(cat $DIRSTACK_DEFAULT_STACK 2> /dev/null)" ]
-    return "$?"
-  }
-
-  function force() {
-    echo "$1" >> "$DIRSTACK_DEFAULT_STACK"
-  }
-
-  function swap() {
-    local size=$(dirstack size)
-    [ "$size" -lt "1" ] && echo "Stack size too small" && return -1
-    local top=$(dirstack peek 2> /dev/null)
-    dirstack burn 2> /dev/null
-    local next=$(dirstack peek 2> /dev/null)
-    dirstack burn 2> /dev/null
-    dirstack force "$top"
-    dirstack force "$next"
-  }
-
-  function dup() {
-    local top=$(dirstack peek)
-    dirstack force "$top"
-  }
-
-  function clear_stack() {
-    rm $DIRSTACK_DEFAULT_STACK
-    touch $DIRSTACK_DEFAULT_STACK
-  }
-
-  function reload_dirstack() {
-    source $HOME/.bash/dirstack.sh
-    dirstack clear
-  }
-
-  function check_environment() {
-    [ -z $DIRSTACK_DEFAULT_GO_DIR ] && DIRSTACK_DEFAULT_GO_DIR=$HOME
-    [ -z $DIRSTACK_DEFAULT_STACK ]  && DIRSTACK_DEFAULT_STACK="$HOME/.dirstack"
-    [ -z $DIRSTACK_SWAP_FILE ]      && DIRSTACK_SWAP_FILE="$HOME/.dirstack_tmp"
-  }
-
-  function has_ps1() {
-    dirstack nonempty? &> /dev/null 
-  }
-
-  function gen_ps1() {
-    function top_of_stack() {
-      local peek=$(dirstack peek 2> /dev/null)
-      echo -n "$(set_color "BLUE" "${peek#$(echo $peek | xargs dirname | xargs dirname)/}")"
-    }
-
-    function stack_size() {
-      local size=$(dirstack size)
-      if [ "$size" != "0" ] ; then
-        echo ":$(set_color "YELLOW" "$size")"
-      fi
-    }
-
-    dirstack has_ps1 || return
-
-    local stack="$(top_of_stack)$(stack_size)"
-    [ $stack ] && stack="($stack)"
-    echo $stack
-  }
-
-  function dirstack_help() {
+  function --help {
     cat<< HELP
 usage: dirstack <command> [options]
 
-the commands are:
-  push [PATH] | push a directory onto the stack, if PATH is not provided, then the CWD is pushed
-  pop         | pop a directory off the stack (if the stack is non-empty), cd to that directory
-  jump        | jump to a directory without popping it off the stack
-  dup         | duplicates the top element of the stack
-  peek        | view the top directory on the stack
-  show        | view the whole stack
-  swap        | swap the top two elements on the stack
-  clear       | blow away the whole stack
-  burn        | remove the top element of the stack
-  empty?      | sets \$? to 1 if the stack is empty, 0 otherwise
+the commands divided into two categories:
+
+Barewords:
+  These are top-level functions included automatically in the environment
+
+  burn | remove the top element of the stack
+  jump | jump to a directory without popping it off the stack
+  push | push the current directory onto the stack,
+  pop  | pop a directory off the stack (if the stack is non-empty), cd to that directory
+  swap | swap the top two elements on the stack
+
+Prefixed:
+  These must be prefixed with a call to 'dirstack' proper
+
+  clear  | blow away the whole stack
+  dup    | duplicates the top element of the stack
+  empty? | sets \$? to 1 if the stack is empty, 0 otherwise
+  peek   | view the top directory on the stack
+  show   | view the whole stack
 
 HELP
   }
+  
+  #fragments#
+  EMPTY_STACK_CHECK="empty? && echo '>>Empty Stack<<' && return 1"
+  STACK_TOO_SMALL_CHECK='[ $(size) -lt 2 ] && echo "Stack size too small" && return 2'
+  ###########
 
-  #dispatcher
-  check_environment
-  case $1 in
-     #public
-     push)      push_ds $2              ;;
-     pop)       pop_ds                  ;;
-     dup)       dup                     ;;
-     peek)      peek                    ;;
-     show)      show                    ;;
-     swap)      swap                    ;;
-     clear)     clear_stack             ;;
-     burn)      burn                    ;;
-     empty?)    is_empty                ;;
-     size)      size_ds                 ;;
-     jump)      jump                    ;;
-     ps1)       gen_ps1                 ;;
-     has_ps1)   has_ps1                 ;;
+  function push {
+    local dir="${1:-`pwd`}"
+    echo " << $dir"
+    echo "$dir" >> $DIRSTACK_STACKFILE
+  }
 
-     #private -- anything in here represents an unsupported function
-     # if you want to use it, and later I break it, it's not my problem.
-     reload)    reload_dirstack         ;;
-     nonempty?) not_empty               ;;
-     force)     force $2                ;;
+  function empty? { [ -z "$(cat $DIRSTACK_STACKFILE)" ] && return $? ; }
 
-     #catch-all
-     *)         dirstack_help           ;;
-  esac
+  function pop { eval $EMPTY_STACK_CHECK ; jump && burn ; }
 
-  unset push_ds; unset pop_ds; unset burn; unset jump; unset peek; unset show;
-  unset do_show; unset is_empty; unset empty_stack_message; unset size_ds;
-  unset not_empty; unset force; unset swap; unset dup; unset clear_stack;
-  unset reload_dirstack; unset check_environment; unset has_ps1; unset gen_ps1;
-  unset top_of_stack; unset stack_size; unset dirstack_help; 
-}
+  function show {
+    echo "-------- DIRECTORY STACK --------" 
+    cat $DIRSTACK_STACKFILE
+    echo "---------------------------------" 
+  }
+
+  function peek { eval $EMPTY_STACK_CHECK ; tail -n1 "$DIRSTACK_STACKFILE" ; return 0 ; }
+
+  function burn {
+    eval $EMPTY_STACK_CHECK
+    sed '$d' $DIRSTACK_STACKFILE | tee $DIRSTACK_STACKFILE
+  } 
+
+  function size { local foo="$(wc -l $DIRSTACK_STACKFILE)" ; echo ${foo%% *} ; }
+  function clear { rm $DIRSTACK_STACKFILE ; touch $DIRSTACK_STACKFILE ; }
+
+  function has-ps1 { true; }
+  function ps1 { echo "($(peek):$(size))"; }
+
+  function jump {
+    eval $EMPTY_STACK_CHECK
+    echo "$(peek)"
+  }
+
+  function swap {
+    eval $STACK_TOO_SMALL_CHECK
+
+    local top="$(peek)" ; burn
+    local sub="$(peek)" ; burn
+    push $top           ; push $sub
+  } 
 
 
+  function --version { echo "v0.0.2"; }
+  
+  $@
+)
 
+#### PUBLIC INTERFACE
 
-
-
+function pop()  { cd "$(dirstack pop)" ; }
+function jump() { cd "$(dirstack jump)"; }
+function push() { dirstack push; }
+function burn() { dirstack burn; }
+function swap() { dirstack swap; }

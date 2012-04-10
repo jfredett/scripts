@@ -28,12 +28,7 @@ if [ "$LINUX" ] ; then
 fi
 
 if dirstack --version &>/dev/null ; then
-  alias push="dirstack push"
-  alias pop="dirstack pop"
-  alias ds="dirstack"
-  alias jump="dirstack jump"
-  alias jt="dirstack jump"
-  alias switch='dirstack jump && dirstack swap'
+  alias jt="jump"
 fi
 
 #common stuff
