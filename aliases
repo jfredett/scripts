@@ -1,26 +1,35 @@
 #!/bin/bash
 
+#alias to reload aliases... meta...
 if [ "$OSX" ] ; then
-  alias g="mvim"
+  alias reload='source ~/.profile'
+elif [ "$LINUX" ] ; then
+  alias reload='source ~/.bash_profile'
+fi
+alias edit-aliases="vim $HOME/.bash/aliases && reload"
+alias edit-functions="vim $HOME/.bash/functions && reload"
+
+#OSX Specific
+if [ "$OSX" ] ; then
   alias ls="gls --color=auto"
-  alias clobber="rake db:drop:all db:create:all db:migrate db:test:prepare && say -v Zarvox 'boom goes the dynamite'"
   alias gitx='gitx --all'
-  alias hammer="clobber"
-  alias clobbah="clobber"
-  alias pewpew="git reset --hard HEAD && git clean -f && say -v princess 'pew pew pew'"
-  alias ANNOYMODE="export ANNOY_MODE=1"
-  alias SHUTUP="unset ANNOY_MODE"
-  alias sweep="rm ~/tmp/*.swp"
 
   alias find="gfind"
   alias locate="glocate"
   alias updatedb="gupdatedb"
   alias oldfind="goldfind"
   alias xargs="gxargs"
+fi
 
+if which ruby &>/dev/null ; then
   alias clb='cl ; bundle '
   alias clr='clb exec rake'
   alias clc='clb exec pry'
+  alias clobber="clr db:drop:all db:create:all db:migrate db:test:prepare"
+  alias hammer="clobber"
+  alias clobbah="clobber"
+  alias pictures="railroady -b -M > doc/models.dot ; dot -Tsvg doc/models.dot > doc/models.svg ; open doc/models.svg"
+  alias heroku_keyswap="ssh-add -D ; ssh-add ~/.ssh/heroku"
 fi
 
 if [ "$LINUX" ] ; then
@@ -31,37 +40,20 @@ if dirstack --version &>/dev/null ; then
   alias jt="jump"
 fi
 
-#common stuff
-alias cd..='cd ..'
-
-#alias to reload aliases... meta...
-if [ "$OSX" ] ; then
-  alias reload='source ~/.profile'
-elif [ "$LINUX" ] ; then
-  alias reload='source ~/.bash_profile'
+if which git &>/dev/null ; then
+  alias pewpew="git reset --hard && git clean -f"
+  alias gru='git remote update -p'
+  alias grom='git rebase origin/master'
+  alias wip='git add . ; git ci -a -m "wip"'
+  alias unwip='git reset HEAD^'
+  alias reset!='git reset --hard HEAD'
 fi
 
-alias edit-aliases="vim $HOME/.bash/aliases && reload"
-alias edit-functions="vim $HOME/.bash/functions && reload"
-
-alias gru='git remote update -p'
-alias grom='git rebase origin/master'
-
-#save me a character, please.
+#common stuff
+alias cd..='cd ..'
 alias vi=vim
-
 alias psf="ps aux | grep"
-
 alias mdr=maildir
-alias pictures="railroady -b -M > doc/models.dot ; dot -Tsvg doc/models.dot > doc/models.svg ; open doc/models.svg"
-
-alias wip='git add . ; git ci -a -m "wip"'
-alias unwip='git reset HEAD^'
-alias reset!='git reset --hard HEAD'
-
-alias heroku_keyswap="ssh-add -D ; ssh-add ~/.ssh/heroku"
-
 alias exterminate="sudo kill -9"
-
 alias check_mail='cat /var/mail/jfredett'
 alias clear_mail='echo > /var/mail/jfredett'
