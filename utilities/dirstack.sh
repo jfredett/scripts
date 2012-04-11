@@ -66,7 +66,10 @@ HELP
   function clear { rm $DIRSTACK_STACKFILE ; touch $DIRSTACK_STACKFILE ; }
 
   function has_ps1 { nonempty?; }
-  function ps1     { echo "($(color BLUE $(peek)):$(color YELLOW $(size)))"; }
+  function ps1     { 
+    local dir=$(peek); dir=${dir#$(echo "$dir" | xargs dirname | xargs dirname)/}
+    echo "($(color BLUE $dir):$(color YELLOW $(size)))"; 
+  }
 
   function size { local foo="$(wc -l $DIRSTACK_STACKFILE)" ; echo ${foo%% *} ; }
   function pop  { empty_stack_check ; jump && burn ; }
