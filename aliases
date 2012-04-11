@@ -2,9 +2,9 @@
 
 #alias to reload aliases... meta...
 if [ "$OSX" ] ; then
-  alias reload='source ~/.profile'
+  alias reload='source ~/.profile ; cd .'
 elif [ "$LINUX" ] ; then
-  alias reload='source ~/.bash_profile'
+  alias reload='source ~/.bash_profile ; cd .'
 fi
 alias edit-aliases="vim $HOME/.bash/aliases && reload"
 alias edit-functions="vim $HOME/.bash/functions && reload"
