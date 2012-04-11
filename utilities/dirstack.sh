@@ -95,7 +95,7 @@ HELP
     local top="$(peek)" ; burn
     local sub="$(peek)" ; burn
     push $top           ; push $sub
-  } 
+  } &>/dev/null
   
   $@
 )
