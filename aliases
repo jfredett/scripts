@@ -56,4 +56,4 @@ alias psf="ps aux | grep"
 alias mdr=maildir
 alias exterminate="sudo kill -9"
 alias check_mail='cat /var/mail/jfredett'
-alias clear_mail='echo > /var/mail/jfredett'
+alias clear_mail='cat /dev/null > /var/mail/jfredett'
