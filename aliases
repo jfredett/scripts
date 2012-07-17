@@ -40,6 +40,7 @@ fi
 
 if dirstack --version &>/dev/null ; then
   alias jt="jump"
+  alias st='jump ; swap'
 fi
 
 if which git &>/dev/null ; then
