@@ -44,7 +44,7 @@ function fup() {
 }
 
 function line-count {
-  find "${1:=.}" -name "${2:=*.rb}" -exec cat {} \; | grep -vE '^\s*#' | grep -vE '^\s*$' | wc -l
+  find "${1:-.}" -name "${2:-*.rb}" -exec cat {} \; | grep -vE '^\s*#' | grep -vE '^\s*$' | wc -l
 }
 
 function go {
