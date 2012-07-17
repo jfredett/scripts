@@ -135,6 +135,11 @@ function fr {
 }
 
 
+
+function perg {
+  tac $2 | grep $1
+}
+
 function update-submodules {
   git stash
   git submodule foreach "git remote update origin -p"
