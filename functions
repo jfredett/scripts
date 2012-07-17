@@ -135,3 +135,10 @@ function fr {
 }
 
 
+function update-submodules {
+  git stash
+  git submodule foreach "git remote update origin -p"
+  git submodule foreach "git reset --hard origin/master"
+  git commit -am "bump submodule"
+  git stash pop
+}
