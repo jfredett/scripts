@@ -102,8 +102,8 @@ HELP
 
 #### PUBLIC INTERFACE
 
-function pop()  { cd "$(dirstack pop)" ; }
 function jump() { cd "$(dirstack jump)"; }
 function push() { dirstack push; }
 function burn() { dirstack burn; }
 function swap() { dirstack swap; }
+function pop()  { jump && burn; }
