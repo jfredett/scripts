@@ -85,7 +85,7 @@ HELP
 
   function show {
     echo "-------- DIRECTORY STACK --------" 
-    cat $DIRSTACK_STACKFILE
+    tac $DIRSTACK_STACKFILE 
     echo "---------------------------------" 
   }
 
