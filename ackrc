@@ -1,0 +1,5 @@
+--ignore-dir=tmp/
+--ignore-dir=log/
+--ignore-dir=vendor/
+--ignore-dir=data/
+-a
