@@ -47,6 +47,7 @@ if which git &>/dev/null ; then
   alias pewpew="git reset --hard && git clean -f"
   alias gru='git remote update -p'
   alias grom='git rebase origin/master'
+  alias grum='git rebase upstream/master'
   alias wip='git add . ; git ci -a -m "wip"'
   alias unwip='git reset HEAD^'
   alias reset!='git reset --hard HEAD'
