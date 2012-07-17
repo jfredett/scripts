@@ -19,6 +19,8 @@ if [ "$OSX" ] ; then
   alias updatedb="gupdatedb"
   alias oldfind="goldfind"
   alias xargs="gxargs"
+
+  alias flush='dscacheutil -flushcache'
 fi
 
 if which ruby &>/dev/null ; then
