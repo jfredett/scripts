@@ -89,6 +89,18 @@ function cl {
   tmux clear-history
 }
 
+function mw {
+  tmux move-window -t $1
+}
+
+function rs {
+  tmux resize-pane -$1 $2
+}
+
+function gt {
+  tmux select-window -t $1
+}
+
 function puppet-mod {
   mkdir -p "$1/{files,manifests,lib,tests,templates}"
 }
