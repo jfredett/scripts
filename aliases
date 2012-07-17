@@ -50,6 +50,9 @@ if which git &>/dev/null ; then
   alias wip='git add . ; git ci -a -m "wip"'
   alias unwip='git reset HEAD^'
   alias reset!='git reset --hard HEAD'
+  if which hub &>/dev/null ; then
+    alias git=hub
+  fi
 fi
 
 #common stuff
