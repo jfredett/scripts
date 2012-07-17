@@ -142,6 +142,14 @@ function update-submodules {
   git commit -am "bump submodule"
   git stash pop
 }
+
+function hitch {
+  command hitch "$@"
+  if [[ -s "$HOME/.hitch_export_authors" ]] ; then source "$HOME/.hitch_export_authors" ; fi
+}
+alias unhitch='hitch -u'
+# hitch
+
 function push-ci {
   git push ${1:-origin} $(git branch | grep \* | cut -c 3-):jf-ci -f
 }
