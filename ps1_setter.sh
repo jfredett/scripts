@@ -15,7 +15,7 @@ function ps1_setter() {
   }
 
   current_time() {
-    echo "$(set_color LGTGRN $(date +%l:%M:%S))"
+    echo "$(set_color LGTGRN $(date +%l:%M))"
   }
 
   function ps1 {
