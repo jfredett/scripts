@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 
 #this needs to be first, since the internal scripts use the GNU 
 #utils, which require these aliases to be in place.
