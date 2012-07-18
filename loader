@@ -22,7 +22,10 @@ fi
 
 if which tmux &>/dev/null ; then
   # tmux completion
-  . /usr/local/etc/bash_completion.d/tmux
+  source /usr/local/etc/bash_completion.d/tmux
   alias tmux="$HOME/.bash/tmux/tmuxen.sh"
 fi
 
+if which task &>/dev/null ; then
+  source "$HOME/.bash/taskwarrior/completion.sh" 
+fi

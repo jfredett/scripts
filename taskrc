@@ -14,5 +14,7 @@
 data.location=/Users/jfredett/.task
 
 # Color theme (uncomment one to use)
-include /usr/local/share/doc/task/rc/dark-green-256.theme
+include /usr/local/share/doc/task/rc/solarized-dark-256.theme
+
+include /usr/local/share/doc/task/rc/holidays.en-US.rc
 
