@@ -101,6 +101,15 @@ function gt {
   tmux select-window -t $1
 }
 
+function sw {
+  #need defaulting
+  mw $1 9999;
+  mw $2 $1;
+  mw $1 $2;
+}
+
+
+
 function puppet-mod {
   mkdir -p "$1/{files,manifests,lib,tests,templates}"
 }
@@ -170,3 +179,39 @@ function local-changes {
   fi
 }
 
+function migration {
+  # must be run from the rails root
+  [ ! -e 'db/migrate/' ] && { echo "You need to execute this from the rails root" ; return 1 ; }
+
+  # figure out if we're doing DM or AR
+  local orm=ActiveRecord
+  grep dm-migrations Gemfile.lock &>/dev/null && orm=DataMapper
+
+  local migration_name="$1"
+  local datestamp="$(date +'%Y%m%d%H%M%S')"
+  local file="./db/migrate/$datestamp""_$migration_name.rb"
+
+  touch $file
+  if [ "$orm" = "ActiveRecord" ] ; then
+    cat <<RUBY>$file
+class Migration_$datestamp < ActiveRecord::Migration
+  # $migration_name
+  def change
+    
+  end
+end
+RUBY
+  else
+    cat <<RUBY>$file
+migration $datestamp, :$migration_name do
+  up do
+  end
+
+  down do
+  end
+end
+RUBY
+  fi
+  
+  $EDITOR $file
+}
