@@ -1,6 +1,8 @@
 #!/bin/bash
 stty -ixon
 
+export LC_ALL=en_US.UTF-8
+
 if [ `uname` = 'Darwin' ] ; then
   export OSX="0"
   unset LINUX
