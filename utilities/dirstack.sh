@@ -56,7 +56,7 @@ Prefixed:
 
 HELP
   }
-  
+
   function empty?    { [ $(size) = 0 ] ; }
   function nonempty? { ! empty? ; }
 
@@ -66,7 +66,7 @@ HELP
   function clear { rm $DIRSTACK_STACKFILE ; touch $DIRSTACK_STACKFILE ; }
 
   function has_ps1 { nonempty?; }
-  function ps1     { 
+  function ps1     {
     local dir=$(peek); dir=${dir#$(echo "$dir" | xargs dirname | xargs dirname)/}
     echo "($(color BLUE $dir):$(color YELLOW $(size)))"; 
   }

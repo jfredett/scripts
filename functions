@@ -48,9 +48,9 @@ function line-count {
 }
 
 function go {
-  git remote update -p 
+  git remote update -p
   git rebase origin/master
-  
+
   if [ -e Gemfile ] ; then
     echo 'detected bundler, running `bundle install`'
     bundle
@@ -75,7 +75,7 @@ function y {
 }
 
 function n {
-  [ $? = 0 ] || $@ 
+  [ $? = 0 ] || $@
 }
 
 function maildir {
@@ -187,16 +187,16 @@ function migration {
 
   touch $file
   if [ "$orm" = "ActiveRecord" ] ; then
-    cat <<RUBY>$file
+    cat <<AR>$file
 class Migration_$datestamp < ActiveRecord::Migration
   # $migration_name
   def change
-    
+
   end
 end
-RUBY
+AR
   else
-    cat <<RUBY>$file
+    cat <<DM>$file
 migration $datestamp, :$migration_name do
   up do
   end
@@ -204,8 +204,9 @@ migration $datestamp, :$migration_name do
   down do
   end
 end
-RUBY
+DM
   fi
-  
+
   $EDITOR $file
 }
+
