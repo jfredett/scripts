@@ -71,7 +71,7 @@ HELP
     echo "($(color BLUE $dir):$(color YELLOW $(size)))"; 
   }
 
-  function size { local foo="$(wc -l $DIRSTACK_STACKFILE)" ; echo ${foo%% *} ; }
+  function size { local foo="$(wc -l $DIRSTACK_STACKFILE)" ; echo ${foo%%$DIRSTACK_STACKFILE} ; }
   function pop  { empty_stack_check ; jump && burn ; }
   function peek { empty_stack_check ; tail -n1 "$DIRSTACK_STACKFILE" ; return 0 ; }
   function burn { empty_stack_check ; sed '$d' $DIRSTACK_STACKFILE | tee $DIRSTACK_STACKFILE ; }
@@ -85,7 +85,7 @@ HELP
 
   function show {
     echo "-------- DIRECTORY STACK --------" 
-    tac $DIRSTACK_STACKFILE 
+    gtac $DIRSTACK_STACKFILE
     echo "---------------------------------" 
   }
 
