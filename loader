@@ -4,7 +4,7 @@
 #utils, which require these aliases to be in place.
 if [ "$OSX" ] ; then 
   # load coreutils
-  . /usr/local/Cellar/coreutils/8.12/aliases
+  export PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"
 fi
 
 # common functions
