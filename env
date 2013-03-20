@@ -41,3 +41,8 @@ export SHELL=/usr/local/bin/bash
 export DEFAULT_VIMSERVER='vim_server'
 export EDITOR='vim'
 export VIM_PATH="$HOME/.vim"
+
+#presume the current path is a go-path, other go paths can be
+# added as needed by projects.
+export GOPATH='.' 
+
