@@ -29,3 +29,7 @@ fi
 if which task &>/dev/null ; then
   source "$HOME/.bash/taskwarrior/completion.sh" 
 fi
+
+if [ "$LINUX" ] ; then
+  xmodmap $HOME/.bash/keymap
+fi
