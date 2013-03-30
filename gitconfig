@@ -1,0 +1,38 @@
+[user]
+  name = Joe Fredette
+  email = jfredett@gmail.com
+
+[color]
+  diff = auto
+  status = auto
+  branch = auto
+  interactive = auto
+
+[alias]
+  st = status -s
+  ci = commit
+  ca = commit -a
+  co = checkout
+  w = whatchanged
+  pm = push -u origin master
+  core = shortlog -s -n --no-merges
+  rc = rebase --continue
+  cont = rebase --continue
+  abort = rebase --abort
+  skip = rebase --skip
+  gr=!"clear ; git log --branches --date=short --graph --all --pretty=format:'%Cred%h%Creset %Cblue%ad%Creset %C(yellow)%aN%Creset %s%C(bold green)%d%Creset' ; clear"
+
+[core]
+  excludesfile = /Users/jfredett/.gitignore_global
+
+[heroku]
+  account = personal
+
+[push]
+  default = current
+
+[rerere]
+  enabled = true
+
+[include]
+  path = ~/.bash/github_gitconfig
