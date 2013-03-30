@@ -18,3 +18,5 @@ source "$HOME/.bash/rc"
 source "$HOME/.rvm/scripts/rvm"
 
 source ~/.bash/loader
+
+set -o vi
