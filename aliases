@@ -36,6 +36,17 @@ fi
 
 if [ "$LINUX" ] ; then
   alias ls="ls --color=auto"
+
+  if which aura &>/dev/null ; then
+    alias pacman="sudo aura"
+  else
+    alias pacman="sudo pacman"
+  fi
+
+  if which aura &>/dev/null ; then
+    alias pbcopy='xsel --clipboard --input'
+    alias pbpaste='xsel --clipboard --output'
+  fi
 fi
 
 if dirstack --version &>/dev/null ; then
