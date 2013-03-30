@@ -95,8 +95,10 @@ function maildir {
 
 function cl {
   /usr/bin/clear
-  tmux clear-history
-  tmux clear-history
+  if which tmux &>/dev/null ; then
+    tmux clear-history
+    tmux clear-history
+  fi
 }
 
 function mw {
