@@ -1,19 +1,24 @@
 function rvmrc {
   create() {
     local dirname="$(basename `readlink -f .`)"
-    if [ -z "$1" ] ; then  
+    if [ -z "$1" ] ; then
       echo "Select a ruby to use in this gemset"
       echo
       select ruby in `rvm list strings` ; do
         local ruby="$ruby" #set the local to mask the variable owned in the select
-        break 
+        break
       done
     else 
-      local ruby="$1"  
+      local ruby="$1"
     fi
-    
-    echo "RVM_STRING=\"rvm use $ruby@$dirname --create --verbose\"" > .rvmrc
-    echo "[ -e './.rvmrc_local' ] && source './.rvmrc_local' || \$RVM_STRING" >> .rvmrc
+
+    if [ -z $LEGACY_MODE ] ; then
+      echo $ruby > '.ruby-version'
+      echo $dirname > '.ruby-gemset'
+    else
+      echo "RVM_STRING=\"rvm use $ruby@$dirname --create --verbose\"" > .rvmrc
+      echo "[ -e './.rvmrc_local' ] && source './.rvmrc_local' || \$RVM_STRING" >> .rvmrc
+    fi
   }
 
   #private
