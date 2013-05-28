@@ -211,3 +211,6 @@ DM
 }
 
 
+function calc {
+  echo "scale=${PRECISION:-4}; $@" | bc
+}
