@@ -122,16 +122,7 @@ function sw {
 
 
 
-function puppet-mod {
-  mkdir -p "$1/{files,manifests,lib,tests,templates}"
-}
 
-function push-with-keyswap {
-  git push origin master
-  ssh-add -D
-  ssh-add ~/.ssh/heroku
-  git push heroku master
-}
 
 function ignore {
   if [ -z "$1" ] ; then
@@ -155,13 +146,6 @@ function perg {
   tac $2 | grep $1
 }
 
-function update-submodules {
-  git stash
-  git submodule foreach "git remote update origin -p"
-  git submodule foreach "git reset --hard origin/master"
-  git commit -am "bump submodule"
-  git stash pop
-}
 
 function hitch {
   command hitch "$@"
@@ -170,30 +154,7 @@ function hitch {
 alias unhitch='hitch -u'
 # hitch
 
-function push-ci {
-  git push ${1:-origin} $(git branch | grep \* | cut -c 3-):jf-ci -f
-}
 
-function local-changes {
-  if [ -z $1 ] ; then
-    git cherry-pick local-changes
-    git reset HEAD^
-    cd .
-  else 
-    git reset --hard
-    git clean -f 
-  fi
-}
-
-function update-gemfile {
-  rm Gemfile.lock
-  bundle
-  git add Gemfile.lock
-}
-
-function build-ri() {
-  gem rdoc --all --ri --no-rdoc 2>/dev/null
-}
 
 function fucking_json_pp() {
   curl $1 | node -e 'ε="";θ=process;β=θ.stdin;γ=JSON;β.on("data",function(τ){ε+=τ}),β.on("end",function(){θ.stdout.write(γ.stringify(γ.parse(ε),γ.χ,2))}),β.resume();'
@@ -203,37 +164,6 @@ function update_local_quill_content() {
   local url="http://congruentsys:22tango@author.cds-onc.com/versions/most_recent.json"
 
   curl "$url" | foreman run bundle exec rails runner 'Version.create! content_json: $stdin.read'
-}
-
-function new-foreman() {
-  local key=".env.${1:-dev}"
-  local cmd=$2
-  shift ; shift
-
-  function _init() {
-    if [ -e '.env.example' ] ; then
-      echo "found .env.example, copying them to .env.dev and .env.test"
-      cp .env.example .env.dev
-      cp .env.example .env.test
-    else
-      echo "no .env.example found, creating empty .env.dev and .env.test"
-      touch .env.dev
-      touch .env.test
-    fi
-    return 0
-  }
-
-  case $cmd in
-    edit) $EDITOR $key               ;;
-    init) _init                      ;;
-       *) command foreman -e $key $@ ;;
-  esac
-
-  unset _init
-}
-
-function kill_with_fire() {
-  ps aux | grep $1 | cut -c 10-15 | xargs sudo kill -9
 }
 
 #function vim() {
