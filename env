@@ -13,7 +13,6 @@ function append_to_path  { export PATH="$PATH:$1" ; }
   append_to_path /usr/sbin
   append_to_path /usr/local/Cellar/coreutils/8.20/libexec/gnubin
   append_to_path /usr/local/Cellar/surfraw/2.2.8/lib/surfraw
-  append_to_path /usr/local/share/python
   append_to_path /bin
   append_to_path /sbin
   append_to_path /usr/texbin
