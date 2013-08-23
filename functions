@@ -102,7 +102,11 @@ function cl {
 }
 
 function mw {
-  tmux move-window -t $1
+  if [ -z "$2" ] ; then
+    tmux move-window -t $1
+  else
+    tmux move-window -t $2 -s $1
+  fi
 }
 
 function rs {
@@ -117,7 +121,7 @@ function sw {
   #need defaulting
   mw $1 9999;
   mw $2 $1;
-  mw $1 $2;
+  mw 9999 $2;
 }
 
 
