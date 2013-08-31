@@ -232,6 +232,10 @@ function new-foreman() {
   unset _init
 }
 
+function kill_with_fire() {
+  ps aux | grep $1 | cut -c 10-15 | xargs sudo kill -9
+}
+
 #function vim() {
   #if [ $# -ne 0 ] ; then
     #local args="--remote-silent $@"
