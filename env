@@ -8,6 +8,7 @@ function append_to_path  { export PATH="$PATH:$1" ; }
 
   append_to_path /usr/bin
   append_to_path /usr/local/bin
+  append_to_path /usr/bin
   append_to_path /usr/local/lib/node_modules
   append_to_path /usr/sbin
   append_to_path /usr/local/Cellar/coreutils/8.20/libexec/gnubin
