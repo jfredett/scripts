@@ -25,6 +25,7 @@ function append_to_path  { export PATH="$PATH:$1" ; }
   append_to_path $HOME/.rvm/bin
   # bash scripts
   append_to_path $HOME/.bash
+  append_to_path $HOME/.bash/bin
   # cabal installed stuff
   append_to_path $HOME/.cabal/bin
   # iv uses this to store it's generated wrappers
