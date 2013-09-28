@@ -47,6 +47,6 @@ export VIM_PATH="$HOME/.vim"
 
 #presume the current path is a go-path, other go paths can be
 # added as needed by projects.
-export GOPATH='.' 
+export GOPATH='.'
 
 export IV_CONFIG_FILE="$HOME/.bash/iv_config"
