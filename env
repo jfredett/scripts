@@ -50,3 +50,8 @@ export VIM_PATH="$HOME/.vim"
 export GOPATH='.'
 
 export IV_CONFIG_FILE="$HOME/.bash/iv_config"
+
+if [ $LINUX ] ; then
+  xset -b &>/dev/null # should only happen in X
+  setterm -blength 0 &>/dev/null #should happen in console-only mode
+fi
