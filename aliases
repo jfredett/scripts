@@ -12,7 +12,6 @@ alias edit-functions="vim $HOME/.bash/functions && reload"
 #OSX Specific
 if [ "$OSX" ] ; then
   alias ls="gls --color=auto"
-  alias gitx='gitx --all'
 
   alias find="gfind"
   alias locate="glocate"
@@ -63,6 +62,7 @@ if which git &>/dev/null ; then
   alias unwip='git reset HEAD^'
   alias reset!='git reset --hard HEAD'
   alias gitkeep='touch .gitkeep'
+  alias gitx='git add -p'
 
   if which hub &>/dev/null ; then
     alias git=hub
