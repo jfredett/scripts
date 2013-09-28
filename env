@@ -28,6 +28,8 @@ function append_to_path  { export PATH="$PATH:$1" ; }
   append_to_path $HOME/.bash
   # cabal installed stuff
   append_to_path $HOME/.cabal/bin
+  # for iv
+  append_to_path $HOME/irc/bin
 
 unset prepend_to_path
 ################################################################################
@@ -47,3 +49,4 @@ export VIM_PATH="$HOME/.vim"
 # added as needed by projects.
 export GOPATH='.' 
 
+export IV_CONFIG_FILE="$HOME/.bash/iv_config"
