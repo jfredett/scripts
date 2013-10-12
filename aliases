@@ -37,9 +37,9 @@ if [ "$LINUX" ] ; then
   alias ls="ls --color=auto"
 
   if which aura &>/dev/null ; then
-    alias pacman="sudo aura"
+    alias pacman="sudo aura --noconfirm"
   else
-    alias pacman="sudo pacman"
+    alias pacman="sudo pacman --noconfirm"
   fi
 
   if which aura &>/dev/null ; then
