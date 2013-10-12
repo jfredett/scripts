@@ -18,9 +18,18 @@ function ps1_setter() {
     echo "$(set_color LGTGRN $(date +%l:%M))"
   }
 
+  ruby_version() {
+    local curr_ruby="$(chruby | grep '*' | cut -c 4-)"
+    if [ $curr_ruby ] ; then
+      set_color PURPLE $curr_ruby
+    else
+      set_color RED "system"
+    fi
+  }
+
   function ps1 {
     local git=$(fetch_ps1 gitspy)
-    local ruby=$(fetch_ps1 rvmspy)
+    local ruby="($(ruby_version))"
     local stack="$(fetch_ps1 dirstack)"
     local clock_state="$(fetch_ps1 clock)"
     local current_dir="($(current_dir))"

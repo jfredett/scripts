@@ -15,7 +15,8 @@ source "$HOME/.bash/env"
 
 source "$HOME/.bash/rc"
 
-source "$HOME/.rvm/scripts/rvm"
+source /usr/local/share/chruby/chruby.sh
+source /usr/local/share/chruby/auto.sh
 
 source ~/.bash/loader
 
