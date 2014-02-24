@@ -10,10 +10,7 @@ function append_to_path  { export PATH="$PATH:$1" ; }
   append_to_path /usr/local/bin
   append_to_path /usr/local/lib/node_modules
   append_to_path /usr/sbin
-  append_to_path /usr/local/Cellar/coreutils/8.20/libexec/gnubin
-  append_to_path /usr/local/Cellar/surfraw/2.2.8/lib/surfraw
-  append_to_path /usr/texbin
-  append_to_path /opt/X11/bin
+  append_to_path /usr/local/opt/coreutils/libexec/gnubin
   append_to_path /usr/local/lib/node_modules
   append_to_path /usr/local/share/npm/bin
   ### Heroku Toolbelt
