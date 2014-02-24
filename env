@@ -6,8 +6,13 @@ function append_to_path  { export PATH="$PATH:$1" ; }
 
   export PATH=
 
-  append_to_path /usr/bin
-  append_to_path /usr/local/bin
+  if [ $OSX ] ; then
+    append_to_path /usr/local/bin
+    append_to_path /usr/bin
+  elif [ $LINUX ] ; then
+    append_to_path /usr/bin
+    append_to_path /usr/local/bin
+  fi
   append_to_path /usr/local/lib/node_modules
   append_to_path /usr/sbin
   append_to_path /usr/local/opt/coreutils/libexec/gnubin
