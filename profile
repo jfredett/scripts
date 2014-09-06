@@ -19,8 +19,8 @@ if [ $OSX ] ; then
   source /usr/local/opt/chruby/share/chruby/chruby.sh
   source /usr/local/share/chruby/auto.sh
 elif [ $LINUX ] ; then
-  source /usr/local/share/chruby/chruby.sh
-  source /usr/local/share/chruby/auto.sh
+  source /usr/share/chruby/chruby.sh
+  source /usr/share/chruby/auto.sh
 fi
 
 
