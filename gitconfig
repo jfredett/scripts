@@ -10,8 +10,9 @@
 
 [alias]
   st = status -s
-  ci = commit
-  ca = commit -a
+  ci = commit -S
+  ca = commit -Sa
+  merge = merge -S
   co = checkout
   w = whatchanged
   pm = push -u origin master
