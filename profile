@@ -23,6 +23,9 @@ elif [ $LINUX ] ; then
   source /usr/share/chruby/auto.sh
 fi
 
+if which halcyon &>/dev/null ; then
+  source <( HALCYON_NO_SELF_UPDATE=1 "/app/halcyon/halcyon" paths )
+fi
 
 
 source ~/.bash/loader
