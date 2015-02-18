@@ -8,7 +8,7 @@ if [ "$1" ] ; then
   $@
 elif rake -V &>/dev/null ; then
   echo "No test command given, but found rake, running default rake command"
-  rake
+  bundle exec rake
 else
   echo "No test command given"
 fi
