@@ -73,3 +73,7 @@ alias check_mail='cat /var/mail/jfredett'
 alias clear_mail='cat /dev/null > /var/mail/jfredett'
 
 alias fr='foreman run'
+
+if [ $OSX ] ; then
+  alias virtualenv2='/usr/local/lib/python2.7/site-packages/virtualenv'
+fi
