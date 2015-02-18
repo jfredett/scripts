@@ -12,8 +12,6 @@ alias edit-functions="nvim $HOME/.bash/functions && reload"
 #OSX Specific
 if [ "$OSX" ] ; then
   alias ls="gls --color=auto"
-
-
   alias flush='dscacheutil -flushcache'
 fi
 
