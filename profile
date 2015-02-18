@@ -27,6 +27,9 @@ if which halcyon &>/dev/null ; then
   source <( HALCYON_NO_SELF_UPDATE=1 "/app/halcyon/halcyon" paths )
 fi
 
+if which pyenv &>/dev/null ; then
+  eval "$(pyenv init -)"
+fi
 
 source ~/.bash/loader
 
