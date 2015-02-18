@@ -11,6 +11,16 @@
   #done
 #}
 
+function each-dir {
+  for dir in * ; do
+    [ ! -d $dir ] && continue
+    echo "----> $dir"
+    pushd $dir 1>/dev/null
+    eval "$@"
+    popd 1>/dev/null
+  done
+}
+
 #function git-update-all {
   #each-dir "git remote update"
 #}
