@@ -6,8 +6,8 @@ if [ "$OSX" ] ; then
 elif [ "$LINUX" ] ; then
   alias reload='source ~/.bash_profile ; cd .'
 fi
-alias edit-aliases="vim $HOME/.bash/aliases && reload"
-alias edit-functions="vim $HOME/.bash/functions && reload"
+alias edit-aliases="nvim $HOME/.bash/aliases && reload"
+alias edit-functions="nvim $HOME/.bash/functions && reload"
 
 #OSX Specific
 if [ "$OSX" ] ; then
@@ -66,7 +66,8 @@ fi
 
 #common stuff
 alias cd..='cd ..'
-alias vi=vim
+alias vi=nvim
+alias vim=nvim
 alias psf="ps aux | grep"
 alias mdr=maildir
 alias exterminate="sudo kill -9"
