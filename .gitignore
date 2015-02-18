@@ -3,3 +3,4 @@ test.sort
 github_gitconfig
 homebrew-git-token
 bin/checker/
+bin/libexec/
