@@ -40,3 +40,5 @@
 
 [include]
   path = ~/.bash/github_gitconfig
+[diff]
+	algorithm = patience
