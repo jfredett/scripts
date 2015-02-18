@@ -4,42 +4,62 @@
 function prepend_to_path { export PATH="$1:$PATH" ; }
 function append_to_path  { export PATH="$PATH:$1" ; }
 
-  export PATH=
+export PATH=
 
-  if [ $OSX ] ; then
-    append_to_path /usr/local/bin
-    append_to_path /usr/bin
-  elif [ $LINUX ] ; then
-    append_to_path /usr/bin
-    append_to_path /usr/local/bin
-  fi
-  append_to_path /usr/local/lib/node_modules
-  append_to_path /usr/sbin
-  append_to_path /usr/local/opt/coreutils/libexec/gnubin
-  append_to_path /usr/local/lib/node_modules
-  append_to_path /usr/local/share/npm/bin
-  ### Heroku Toolbelt
-  append_to_path /usr/local/heroku/bin
-  # bash scripts
-  append_to_path $HOME/.bash
-  append_to_path $HOME/.bash/bin
-  # cabal installed stuff
-  append_to_path $HOME/.cabal/bin
-  # iv uses this to store it's generated wrappers
-  append_to_path $HOME/irc/bin
+if [ $OSX ] ; then
+  append_to_path /usr/local/bin
+  append_to_path /usr/bin
+elif [ $LINUX ] ; then
+  append_to_path /usr/bin
+  append_to_path /usr/local/bin
+fi
+append_to_path /usr/local/lib/node_modules
+append_to_path /usr/sbin
+append_to_path /usr/local/opt/coreutils/libexec/gnubin
+append_to_path /usr/local/lib/node_modules
+append_to_path /usr/local/share/npm/bin
+### Heroku Toolbelt
+append_to_path /usr/local/heroku/bin
+# bash scripts
+append_to_path $HOME/.bash
+append_to_path $HOME/.bash/bin
+# cabal installed stuff
+append_to_path $HOME/.cabal/bin
+# iv uses this to store it's generated wrappers
+append_to_path $HOME/irc/bin
+append_to_path .cabal-sandbox/bin
+append_to_path $HOME/bin
 
-  if [ $OSX ] ; then
-    # we don't need this on linux, it breaks things
-    append_to_path /bin
-  fi
+if [ $OSX ] ; then
+  # we don't need this on linux, it breaks things
+  append_to_path /bin
+  append_to_path /sbin
+fi
+
+
+export SQLPATH="$HOME/oracle/instantclient_11_2"
+export TNS_ADMIN="$SQLPATH"
+export NLS_LANG="AMERICAN_AMERICA.UTF8"
+if [ $LINUX ] ; then
+  export LD_LIBRARY_PATH="$HOME/oracle/instantclient_11_2/"
+  append_to_path $LD_LIBRARY_PATH
+elif [ $OSX ] ; then
+  export DYLD_LIBRARY_PATH="$HOME/oracle/instantclient_11_2/"
+  append_to_path $DYLD_LIBRARY_PATH
+fi
 
 unset prepend_to_path
+unset append_to_path
 ################################################################################
 
 export LS_COLORS='di=01;36'
 
 export HISTSIZE=999999
 export HISTFILESIZE=999999
+
+if [ $OSX ] ; then
+  export HOMEBREW_GITHUB_API_TOKEN=`cat $HOME/.bash/homebrew-git-token`
+fi
 
 export SHELL=/usr/local/bin/bash
 
@@ -57,6 +77,4 @@ if [ $LINUX ] ; then
   xset -b &>/dev/null # should only happen in X
   setterm -blength 0 &>/dev/null #should happen in console-only mode
 fi
-
-export HOMEBREW_GITHUB_API_TOKEN=`cat $HOME/.bash/homebrew-git-token`
 
