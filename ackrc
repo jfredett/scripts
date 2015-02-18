@@ -1,7 +1,9 @@
 --ignore-dir=tmp/
+--ignore-dir=coverage/
 --ignore-dir=.rbx/
 --ignore-dir=.yardoc/
 --ignore-dir=log/
 --ignore-dir=doc/
 --ignore-dir=vendor/
 --ignore-dir=data/
+--ignore-file=is:tags
